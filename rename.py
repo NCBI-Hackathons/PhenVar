@@ -5,7 +5,7 @@ import time # We need this if we want to filter based on age
 from urllib2 import HTTPError
 import xml.etree.ElementTree as ET
 
-# Configuratoin settings to be moved externally later
+# Configuration settings to be moved externally later
 email = "jon.demasi@colorado.edu"
 
 
@@ -14,10 +14,18 @@ Take a search term, intended to be an rs#,
 and return a list of pmids
 """
 def get_pmids(interm):
-    interm = interm + " AND pubmed_snp_cited[sb]"
-    Entrez.email = email     # Always tell NCBI who you are
-    search_results = Entrez.read(Entrez.esearch(db="pubmed", term=interm, usehistory="y"))
-    return search_results
+    if isinstance(interm, str):
+        interm = interm + " AND pubmed_snp_cited[sb]"
+        Entrez.email = email     # Always tell NCBI who you are
+        search_results = Entrez.read(Entrez.esearch(db="pubmed", term=interm, usehistory="y"))
+        return search_results
+    elif isinstance(interm, list):
+        searchstring = " OR ".join(interm)
+        searchstring = "(" + searchstring + ") AND pubmed_snp_cited[sb]"
+        Entrez.email = email     # Always tell NCBI who you are
+        search_results = Entrez.read(Entrez.esearch(db="pubmed", term=searchstring, usehistory="y"))
+        return search_results
+
 
 
 """ 
@@ -48,7 +56,7 @@ def get_abstracts(results):
 
 # Just using this to test get_pmids function
 
-toquery=get_pmids("rs328")
+toquery=get_pmids(["rs328", "rs360"])
 
 # List for abstracts, ready for nltk
 abstracts = get_abstracts(toquery)
