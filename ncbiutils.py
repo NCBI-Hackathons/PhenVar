@@ -1,12 +1,10 @@
-#!/usr/bin/env python2
-
 from Bio import Entrez
 import time # We need this if we want to filter based on age
 from urllib2 import HTTPError
 import xml.etree.ElementTree as ET
 
-# Configuration settings to be moved externally later
-email = "jon.demasi@colorado.edu"
+from configuration import settings
+email = settings["email"]
 
 
 """ 
