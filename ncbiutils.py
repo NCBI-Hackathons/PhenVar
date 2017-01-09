@@ -21,6 +21,7 @@ def get_pmids(interm):
         Entrez.email = email     # Always tell NCBI who you are
         search_results = Entrez.read(Entrez.esearch(db="pubmed", term=interm,
                                                     usehistory="y"))
+        print("Found a total of " + search_results["Count"] + " results.")
         return search_results
     elif isinstance(interm, list):
         searchstring = " OR ".join(interm)
