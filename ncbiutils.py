@@ -3,7 +3,7 @@ import time  # We need this if we want to filter based on age
 from urllib2 import HTTPError
 import xml.etree.ElementTree as ET
 from settings import configuration
-email = configuratoin["email"]
+email = configuration["email"]
 
 
 """
