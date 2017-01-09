@@ -12,7 +12,9 @@ Take a search term, intended to be an rs#,
 and return a list of pmids
 """
 def get_pmids(interm):
-    # This is obsolete now, essentially 
+    # This is obsolete now, essentially, but
+    # allows a user to pass a single string
+    # which can be nice.  
     if isinstance(interm, str):
         interm = interm + " AND pubmed_snp_cited[sb]"
         Entrez.email = email     # Always tell NCBI who you are
