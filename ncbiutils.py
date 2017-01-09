@@ -14,6 +14,7 @@ Take a search term, intended to be an rs#,
 and return a list of pmids
 """
 def get_pmids(interm):
+    # This is obsolete now, essentially 
     if isinstance(interm, str):
         interm = interm + " AND pubmed_snp_cited[sb]"
         Entrez.email = email     # Always tell NCBI who you are
@@ -53,11 +54,3 @@ def get_abstracts(results):
                 abstracts_list.append(sec.text)
     return abstracts_list
 
-
-# Just using this to test get_pmids function
-
-toquery=get_pmids(["rs328", "rs360"])
-
-# List for abstracts, ready for nltk
-abstracts = get_abstracts(toquery)
-print(abstracts)
