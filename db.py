@@ -1,7 +1,8 @@
 import sqlite3
-import ncbiutils
+#import ncbiutils
 import time
 from settings import configuration
+import os
 
 db_location = configuration["dbloc"]
 db_exists = False
@@ -12,7 +13,7 @@ previous exist and returns a list including the connection as well
 as the cursor """
 def connect(db_location):
     conn = sqlite3.connect(db_location)
-    cur = conn.cursur()
+    cur = conn.cursor()
     return(conn, cur)
 
 """ Commits all changes that may not have actually been written yet
@@ -29,6 +30,11 @@ def insert_date(db, cursor, records):
     now = time.strftime("%Y-%m-%d")
     cursor.execute("""INSERT INTO updatehist VALUES (?, ?)""", (now, records))
     db.commit()
+
+""" This function can be used to effectively print the entire update history
+for a given dbs update table """ 
+def print_update_history(db, cursor):
+    pass
 
 """ Check if db already exists.  This should always be run 
 prior to running updates, because they do not currently check
@@ -54,10 +60,9 @@ def create_cache(location):
     # Get list of rsids cited in pubmed
     # For each rsid in list, get pmids citing them
     # Update our date table with the records we just added
-    insert_date(location, numadded)
+    insert_date(sqlinfo[0], sqlinfo[1], 90)
     # Replace the following two with a dedicated function
-    cachedb.commit()
-    cachdb.close()
+    disconnect(sqlinfo[0])
 
 """ Check if there are updates to our current
 state of cachedb.  If so, download and append
@@ -74,7 +79,7 @@ def get_pmids(rsid):
 
 """ For a given pmid, return its abstract. If multiple
 pmids are given, return a list of all abstracts. """
-def get_abstracts:
+def get_abstracts():
     pass
 
 """ This function is intended to be run to establish a connection,
@@ -85,8 +90,9 @@ def initdb():
     # Regardless of which of the following conditions is true 
     # we're going to need to open db and cursor, so let's just
     # go ahead and do it.  
-    if db_exists(db_location):
+    if check_db(db_location):
         check_updates(db_location)
     else:
-        createcache(db_location)
+        create_cache(db_location)
 
+initdb()
