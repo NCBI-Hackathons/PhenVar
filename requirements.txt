@@ -2,3 +2,4 @@ biopython
 nltk
 wordcloud
 PIL
+matplotlib
