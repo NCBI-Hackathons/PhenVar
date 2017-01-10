@@ -8,3 +8,5 @@ settings.py is a file containing a single dictionary with configuration options 
 Takes a single rsid input (string) or several rsid inputs (list of strings) and returns a dictionary from Entrez.read/esearch.  The results returned are all pmids which explicitly cited the rsids given.  
 #### get_abstracts
 Expects the results from get_pmids as an input.  Will return a list of abstracts.  Each item in the list is an abstract to a pmid from the get_pmids search results.  Can return a list with only one item.  
+#### get_abstracts_from_list
+Instead of relying on a previous, saved search, this function will return the abstracts from a pre-defined list of pmids
