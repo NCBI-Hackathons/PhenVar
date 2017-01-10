@@ -1,5 +1,7 @@
 from lanpros import *
 from wordcloud import *
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from ncbiutils import *
 
@@ -11,7 +13,7 @@ def create_wordcloud(normalized_all_counts):
     plt.imshow(word_cloud)
     plt.axis("off")
     plt.savefig("figure.png")
-    plt.show()
+    #plt.show()
     return
 
 
