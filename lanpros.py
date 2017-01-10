@@ -30,7 +30,7 @@ def tagged_abstracts(tokenized_abstracts_list):
         tagged_abstracts_list.append(tagged)
     return tagged_abstracts_list
 
-def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
+def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.0):
 
     """Takes a list of tuples of the form (word, tag) and returns a dictionary of counts for each
     word with tag "NN", "NNS", "NNP" or "NNPS" """
@@ -70,9 +70,15 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
 
                 single_abstract_count = float(each_abstract[key])
 
-                if (single_abstract_count/total_occurrences) < def_tags_per_abs:
+                if def_tags_per_abs != 0:
 
+                    if (single_abstract_count/total_occurrences) < def_tags_per_abs:
+
+                        normalized_all_counts[key] = float(all_counts[key])/num_abstracts
+
+                else:
+                    
                     normalized_all_counts[key] = float(all_counts[key])/num_abstracts
 
-    return normalized_all_counts
 
+    return normalized_all_counts
