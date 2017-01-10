@@ -1,4 +1,4 @@
-from language_processing import *
+from lanpros import *
 from wordcloud import *
 import matplotlib.pyplot as plt
 
