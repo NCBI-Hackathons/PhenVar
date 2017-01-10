@@ -118,6 +118,9 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
 
 
 
+
+
+
 #test implementation
 
 toquery=get_pmids("rs328")
@@ -127,8 +130,5 @@ abstracts = get_abstracts(toquery)
 t = tokenize_abstracts(abstracts)
 q = tagged_abstracts(t)
 n = extract_nouns(q)
-
-
-print n
 
 print n
