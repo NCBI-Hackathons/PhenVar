@@ -39,16 +39,18 @@ def create_cache(location):
 """ Check if there are updates to our current
 state of cachedb.  If so, download and append
 to relevant tables. """
-def check_updates(location):
+def check_updates(cursor):
     pass
 
 """ For a given rsid, get the list of pmids that
-explicitly cite it """
+explicitly cite it. """
 def get_pmids(rsid):
-    pass
+    t = (rsid,)
+    c.execute('SELECT pmids FROM rsids WHERE rsid=?', t)
+    return pmids
 
 """ For a given pmid, return its abstract. If multiple
-pmids are given, return a list of all abstracts """
+pmids are given, return a list of all abstracts. """
 def get_abstracts:
     pass
 
