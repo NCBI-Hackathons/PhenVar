@@ -78,27 +78,25 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
     word with tag "NN", "NNS", "NNP" or "NNPS" """
 
     noun_counter = []
-    per_abstract_counts = []
-    per_abstract_counts_list = []
+    all_abstract_noun_counts = []
     normalized_all_counts = {}
 
 
     for tags in tagged_abstracts_list:
 
-        per_abstract_tag_counts = []
+        per_abstract_noun_counts = []
 
         for tag in tags:
 
             if tag[1] == "NN" or tag[1] == "NNS" or tag[1] == "NNP" or tag[1] == "NNPS":
 
-                per_abstract_tag_counts.append(str(tag[0].encode('ascii', 'ignore')))
+
+                per_abstract_noun_counts.append(str(tag[0].encode('ascii', 'ignore')))
 
                 noun_counter.append(str(tag[0].encode('ascii', 'ignore')))
 
 
-        per_abstract_counts_list.append(per_abstract_dict)
-
-    per_abstract_dict = dict(Counter(per_abstract_tag_counts))
+        all_abstract_noun_counts.append(dict(Counter(per_abstract_noun_counts)))
 
     all_counts = dict(Counter(noun_counter))
 
@@ -106,24 +104,18 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
 
     for key in all_counts.keys():
 
-        if key in all_counts:
+        for each_abstract in all_abstract_noun_counts:
 
-            total_occurrences = float(all_counts[key])
-        else:
+            if key in each_abstract:
 
-            total_occurrences = 0
-
-        for abstract_ in per_abstract_counts_list:
-            #print abstract_
-
-            if key in abstract_ and key in all_counts:
-
-                single_abstract_count = float(abstract_[key])
+                single_abstract_count = float(each_abstract[key])
 
                 if (single_abstract_count/total_occurrences) < def_tags_per_abs:
                     normalized_all_counts[key] = float(all_counts[key])/num_abstracts
 
     return normalized_all_counts
+
+
 
 
 #test implementation
