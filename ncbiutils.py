@@ -60,3 +60,16 @@ def get_abstracts(results):
             for sec in abst.iter('AbstractText'):
                 abstracts_list.append(sec.text)
     return abstracts_list
+
+def get_abstracts_from_list(pmids_list):
+    abstracts_list = []
+    Entrez.email = email
+    for each_pmid in pmids_list:
+        fetch_handle = Entrez.efetch(db="pubmed", id=each_pmid, retmode='xml')
+        data = fetch_handle.read()
+        fetch_handle.close()
+        root = ET.fromstring(data)
+        for abst in root.iter('Abstract'):
+            for sec in abst.iter('AbstractText'):
+                abstracts_list.append(sec.text)
+    return abstracts_list
