@@ -88,7 +88,8 @@ def get_abstracts():
 """ This function is intended to be run to establish a connection,
 as well as a cursor.  It will also check if the DB exists or needs
 to be updated (can be configured to ignore updates).  Returns a tuple
-of (connection, cursor). """
+of (connection, cursor). 
+CURRENTLY BEING USED AS A TEST FUNCTION"""
 def initdb():
     check_db(db_location)
     if db_exists is True:
