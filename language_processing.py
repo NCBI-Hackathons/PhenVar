@@ -6,12 +6,8 @@ import xml.etree.ElementTree as ET
 from collections import Counter
 import numpy as np
 import operator
-#from wordcloud import *
-#from PIL import Image
 from os import path
-#import matplotlib.pyplot as plt
 import random
-#from sklearn.feature_extraction import DictVectorizer
 
 # Configuratoin settings to be moved externally later
 email = "jon.demasi@colorado.edu"
@@ -116,20 +112,3 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
                     normalized_all_counts[key] = float(all_counts[key])/num_abstracts
 
     return normalized_all_counts
-
-
-
-
-
-
-
-#test implementation
-
-toquery=get_pmids("rs328")
-
-abstracts = get_abstracts(toquery)
-
-t = tokenize_abstracts(abstracts)
-q = tagged_abstracts(t)
-n = extract_nouns(q)
-print create_wordcloud(n)
