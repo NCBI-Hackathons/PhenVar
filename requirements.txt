@@ -1,5 +1,4 @@
 biopython
 nltk
-in addition to installing the nltk module, make sure to separately download required nltk downloads using nltk.download() within the python environment or > -m python nltk.downloader all
 wordcloud
-Python Imaging Library
+PIL
