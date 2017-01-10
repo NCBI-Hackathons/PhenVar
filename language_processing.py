@@ -6,6 +6,12 @@ import xml.etree.ElementTree as ET
 from collections import Counter
 import numpy as np
 import operator
+from wordcloud import *
+from PIL import Image
+from os import path
+import matplotlib.pyplot at plt
+import random
+#from sklearn.feature_extraction import DictVectorizer
 
 # Configuratoin settings to be moved externally later
 email = "jon.demasi@colorado.edu"
@@ -75,9 +81,11 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
     per_abstract_counts = []
     per_abstract_counts_list = []
     normalized_all_counts = {}
-    per_abstract_tag_counts = []
+
 
     for tags in tagged_abstracts_list:
+
+        per_abstract_tag_counts = []
 
         for tag in tags:
 
@@ -87,8 +95,10 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
 
                 noun_counter.append(str(tag[0].encode('ascii', 'ignore')))
 
-        per_abstract_dict = dict(Counter(per_abstract_tag_counts))
+
         per_abstract_counts_list.append(per_abstract_dict)
+
+    per_abstract_dict = dict(Counter(per_abstract_tag_counts))
 
     all_counts = dict(Counter(noun_counter))
 
@@ -113,7 +123,8 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
                 if (single_abstract_count/total_occurrences) < def_tags_per_abs:
                     normalized_all_counts[key] = float(all_counts[key])/num_abstracts
 
-    return (normalized_all_counts)
+    return normalized_all_counts
+
 
 #test implementation
 
