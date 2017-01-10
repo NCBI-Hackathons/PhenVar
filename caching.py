@@ -6,12 +6,20 @@ from settings import configuration
 db_location = configuration["dbloc"]
 db_exists = False
 
+# Dedicated to inserting date in update table on creation/update
+# pulled out in its own function in case we want to store metdata
+# about updates later.
+def insert_date(location, records):
+    pass
+
 # Check if db already exists 
-def checkdb(location):
+def check_db(location):
     if os.path.isfile(location):
         db_exists = True
 
-def createcache(location):
+# Called if cache does not yet exist
+def create_cache(location):
+    numadded = 0
     # Since this doesn't exist, creates it
     cachedb = sqlite3.connect(location)
     c = cachedb.cursor()
@@ -22,8 +30,9 @@ def createcache(location):
     c.execute('''CREATE TABLE updatehist
              (date text, added integer)''')
     # Table for pmid + abstract 
-    c.execute('''CREATE TABLE pmidabs
+    c.execute('''CREATE TABLE pminfo
              (pmid integer, abstract text)''')
+    insert_date(location, numadded)
     cachedb.commit()
     cachdb.close()
 
@@ -31,6 +40,16 @@ def createcache(location):
 state of cachedb.  If so, download and append
 to relevant tables. """
 def check_updates(location):
+    pass
+
+""" For a given rsid, get the list of pmids that
+explicitly cite it """
+def get_pmids(rsid):
+    pass
+
+""" For a given pmid, return its abstract. If multiple
+pmids are given, return a list of all abstracts """
+def get_abstracts:
     pass
 
 def main():
