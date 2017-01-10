@@ -32,6 +32,9 @@ def create_cache(location):
     # Table for pmid + abstract 
     c.execute('''CREATE TABLE pminfo
              (pmid integer, abstract text)''')
+    # Get list of rsids cited in pubmed
+    # For each rsid in list, get pmids citing them
+    # Update our date table with the records we just added
     insert_date(location, numadded)
     cachedb.commit()
     cachdb.close()
