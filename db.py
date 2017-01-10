@@ -28,6 +28,7 @@ pulled out in its own function in case we want to store metdata
 about updates later. """
 def insert_date(db, cursor, records):
     now = time.strftime("%Y-%m-%d")
+    print("Adding entry to update history: " + str(records)  + " records on " + now)
     cursor.execute("""INSERT INTO updatehist VALUES (?, ?)""", (now, records))
     db.commit()
 
@@ -47,31 +48,29 @@ def check_db(location):
         db_exists = True
 
 # Called if cache does not yet exist
-def create_cache(location):
+def create_cache(conn, cursor):
     numadded = 0
     # Opens db and returns list of conn, cursur
-    sqlinfo = connect(db_location)    
     # Table for rsid and associated pmids
-    sqlinfo[1].execute('''CREATE TABLE rsids
+    cursor.execute('''CREATE TABLE rsids
              (rsid text, pmids text)''')
     # A table to store update history in case we'd need it?
-    sqlinfo[1].execute('''CREATE TABLE updatehist
+    cursor.execute('''CREATE TABLE updatehist
              (date text, added integer)''')
     # Table for pmid + abstract 
-    sqlinfo[1].execute('''CREATE TABLE pminfo
+    cursor.execute('''CREATE TABLE pminfo
              (pmid integer, abstract text)''')
     # Get list of rsids cited in pubmed
     # For each rsid in list, get pmids citing them
     # Update our date table with the records we just added
-    insert_date(sqlinfo[0], sqlinfo[1], 90)
+    insert_date(conn, cursor, 90)
     # Replace the following two with a dedicated function
-    print_update_history(sqlinfo[0], sqlinfo[1])
-    disconnect(sqlinfo[0])
+    print_update_history(conn, cursor)
 
 """ Check if there are updates to our current
 state of cachedb.  If so, download and append
 to relevant tables. """
-def check_updates(cursor):
+def check_updates(conn, cursor):
     pass
 
 """ For a given rsid, get the list of pmids that
@@ -94,9 +93,14 @@ def initdb():
     check_db(db_location)
     if db_exists is True:
         print("Database already exists. Checking for updates")
-        check_updates(db_location)
+        sqlinfo = connect(db_location)    
+        check_updates(sqlinfo[0], sqlinfo[1])
+        disconnect(sqlinfo[0])
     elif db_exists is False:
         print("Database does not exist. Creating now... This may take awhile")
-        create_cache(db_location)
+        sqlinfo = connect(db_location)
+        create_cache(sqlinfo[0], sqlinfo[1])
+        disconnect(sqlinfo[0])
+
 
 initdb()
