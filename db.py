@@ -36,6 +36,7 @@ def create_cache(location):
     # For each rsid in list, get pmids citing them
     # Update our date table with the records we just added
     insert_date(location, numadded)
+    # Replace the following two with a dedicated function
     cachedb.commit()
     cachdb.close()
 
@@ -62,9 +63,11 @@ as well as a cursor.  It will also check if the DB exists or needs
 to be updated (can be configured to ignore updates).  Returns a tuple
 of (connection, cursor). """
 def initdb():
+    # Regardless of which of the following conditions is true 
+    # we're going to need to open db and cursor, so let's just
+    # go ahead and do it.  
     if db_exists(db_location):
         check_updates(db_location)
     else:
         createcache(db_location)
 
-initdb()
