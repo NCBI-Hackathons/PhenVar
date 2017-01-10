@@ -65,7 +65,10 @@ def get_abstracts(results):
     return abstracts_list
 
 def get_abstracts_from_list(pmids_list):
+<<<<<<< HEAD
 #    abstracts_list = []
+=======
+>>>>>>> c2e0c9a6ac820f9aae06389f91ef9a168920d502
     pmids_abstracts_dict = {}
     Entrez.email = email
     for each_pmid in pmids_list:
@@ -75,8 +78,14 @@ def get_abstracts_from_list(pmids_list):
         root = ET.fromstring(data)
         for abst in root.iter('Abstract'):
             for sec in abst.iter('AbstractText'):
+<<<<<<< HEAD
                 #abstracts_list.append(sec.text)
                 pmids_abstracts_dict[each_pmid] = sec.text
     print pmids_abstracts_dict
 #    print abstracts_list
     #return abstracts_list
+=======
+                pmids_abstracts_dict[each_pmid] = sec.text
+    print pmids_abstracts_dict
+    return pmids_abstracts_dict
+>>>>>>> c2e0c9a6ac820f9aae06389f91ef9a168920d502
