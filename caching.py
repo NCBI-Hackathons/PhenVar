@@ -57,10 +57,14 @@ pmids are given, return a list of all abstracts. """
 def get_abstracts:
     pass
 
-def main():
+""" This function is intended to be run to establish a connection,
+as well as a cursor.  It will also check if the DB exists or needs
+to be updated (can be configured to ignore updates).  Returns a tuple
+of (connection, cursor). """
+def initdb():
     if db_exists(db_location):
         check_updates(db_location)
     else:
         createcache(db_location)
 
-main()
+initdb()
