@@ -1,6 +1,8 @@
-# NCBI_Hackathon January 9-11, 2017
 # PhenVar
 PhenVar is designed to take one or more rsids and generate a list of PubMed IDs to query and generate novel associations between publications. It utilizes a local sqlite cache in a configurable location to keep a local copy of relevant srids, pmids, and the abstrat blobs for the pmids.  
-## Known Issues / Improvements
-#### True issues and improvements to be moved to GH issue tracking in the future
-Currently the articles are being downloaded one by one and the abstracts appended to a list (prior to any language processing).  They could be downloaded in bulk, but ultimately this will use more memory.  If the datasets got sizeable enough where this should be considered an option, it should be added as a configuration option. Or proper block sizing that could change to increase speed / efficiency vs. not.  
+
+### ncbiutils.py
+#### get_pmids 
+Takes a single rsid input (string) or several rsid inputs (list of strings) and returns a dictionary from Entrez.read/esearch.  The results returned are all pmids which explicitly cited the rsids given.  
+#### get_abstracts
+Expects the results from get_pmids as an input.  Will return a list of abstracts.  Each item in the list is an abstract to a pmid from the get_pmids search results.  Can return a list with only one item.  
