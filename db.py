@@ -6,11 +6,29 @@ from settings import configuration
 db_location = configuration["dbloc"]
 db_exists = False
 
-# Dedicated to inserting date in update table on creation/update
-# pulled out in its own function in case we want to store metdata
-# about updates later.
-def insert_date(location, records):
-    pass
+
+""" Establishes a connection to an sql database that may or may not
+previous exist and returns a list including the connection as well
+as the cursor """
+def connect(db_location):
+    conn = sqlite3.connect(db_location)
+    cur = conn.cursur()
+    return(conn, cur)
+
+""" Commits all changes that may not have actually been written yet
+and closes the connection.  Should be used at the end of all db 
+operations """
+def disconnect(conn):
+    conn.commit()
+    conn.close()
+    
+""" Dedicated to inserting date in update table on creation/update
+pulled out in its own function in case we want to store metdata
+about updates later. """
+def insert_date(db, cursor, records):
+    now = time.strftime("%Y-%m-%d")
+    cursor.execute("""INSERT INTO updatehist VALUES (?, ?)""", (now, records))
+    db.commit()
 
 # Check if db already exists 
 def check_db(location):
@@ -21,8 +39,7 @@ def check_db(location):
 def create_cache(location):
     numadded = 0
     # Since this doesn't exist, creates it
-    cachedb = sqlite3.connect(location)
-    c = cachedb.cursor()
+    
     # Table for rsid and associated pmids
     c.execute('''CREATE TABLE rsids
              (rsid text, pmids text)''')
