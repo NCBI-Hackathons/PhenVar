@@ -22,9 +22,8 @@ def get_pmids(interm):
         search_results = Entrez.read(Entrez.esearch(db="pubmed", term=interm,
                                                     usehistory="y"))
         print("Found a total of " + search_results["Count"] + " results using search string '" + interm + "'")
-        pmids_list = search_results["IdList"]
-        #return search_results
-        return pmids_list
+        return search_results
+    
     elif isinstance(interm, list):
         searchstring = " OR ".join(interm)
         searchstring = "(" + searchstring + ") AND pubmed_snp_cited[sb]"
@@ -33,8 +32,7 @@ def get_pmids(interm):
                                                     term=searchstring,
                                                     usehistory="y"))
         print("Found a total of " + search_results["Count"] + " results using search string'" + searchstring + "'")
-        pmids_list = search_results["IdList"]
-        return pmids_list
+        return search_results
 
 
 """
@@ -65,10 +63,7 @@ def get_abstracts(results):
     return abstracts_list
 
 def get_abstracts_from_list(pmids_list):
-<<<<<<< HEAD
 #    abstracts_list = []
-=======
->>>>>>> c2e0c9a6ac820f9aae06389f91ef9a168920d502
     pmids_abstracts_dict = {}
     Entrez.email = email
     for each_pmid in pmids_list:
@@ -78,14 +73,10 @@ def get_abstracts_from_list(pmids_list):
         root = ET.fromstring(data)
         for abst in root.iter('Abstract'):
             for sec in abst.iter('AbstractText'):
-<<<<<<< HEAD
                 #abstracts_list.append(sec.text)
-                pmids_abstracts_dict[each_pmid] = sec.text
-    print pmids_abstracts_dict
+#                pmids_abstracts_dict[each_pmid] = sec.text
 #    print abstracts_list
     #return abstracts_list
-=======
                 pmids_abstracts_dict[each_pmid] = sec.text
     print pmids_abstracts_dict
     return pmids_abstracts_dict
->>>>>>> c2e0c9a6ac820f9aae06389f91ef9a168920d502
