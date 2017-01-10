@@ -9,7 +9,8 @@ def create_wordcloud(normalized_all_counts):
     word_cloud = WordCloud().generate(word_cloud_text)
     plt.imshow(word_cloud)
     plt.axis("off")
-    plt.show()
+    plt.savefig("figure.png")
+#    plt.show()
     return
 
 
