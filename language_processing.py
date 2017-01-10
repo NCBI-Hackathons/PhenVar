@@ -6,10 +6,10 @@ import xml.etree.ElementTree as ET
 from collections import Counter
 import numpy as np
 import operator
-from wordcloud import *
-from PIL import Image
+#from wordcloud import *
+#from PIL import Image
 from os import path
-import matplotlib.pyplot at plt
+#import matplotlib.pyplot as plt
 import random
 #from sklearn.feature_extraction import DictVectorizer
 
@@ -104,6 +104,8 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
 
     for key in all_counts.keys():
 
+        total_occurrences = float(all_counts[key])
+
         for each_abstract in all_abstract_noun_counts:
 
             if key in each_abstract:
@@ -130,5 +132,4 @@ abstracts = get_abstracts(toquery)
 t = tokenize_abstracts(abstracts)
 q = tagged_abstracts(t)
 n = extract_nouns(q)
-
-print n
+print create_wordcloud(n)
