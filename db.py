@@ -30,7 +30,9 @@ def insert_date(db, cursor, records):
     cursor.execute("""INSERT INTO updatehist VALUES (?, ?)""", (now, records))
     db.commit()
 
-# Check if db already exists 
+""" Check if db already exists.  This should always be run 
+prior to running updates, because they do not currently check
+on their own """
 def check_db(location):
     if os.path.isfile(location):
         db_exists = True
