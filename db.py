@@ -38,16 +38,16 @@ def check_db(location):
 # Called if cache does not yet exist
 def create_cache(location):
     numadded = 0
-    # Since this doesn't exist, creates it
-    
+    # Opens db and returns list of conn, cursur
+    sqlinfo = connect(db_location)    
     # Table for rsid and associated pmids
-    c.execute('''CREATE TABLE rsids
+    sqlinfo[1].execute('''CREATE TABLE rsids
              (rsid text, pmids text)''')
     # A table to store update history in case we'd need it?
-    c.execute('''CREATE TABLE updatehist
+    sqlinfo[1].execute('''CREATE TABLE updatehist
              (date text, added integer)''')
     # Table for pmid + abstract 
-    c.execute('''CREATE TABLE pminfo
+    sqlinfo[1].execute('''CREATE TABLE pminfo
              (pmid integer, abstract text)''')
     # Get list of rsids cited in pubmed
     # For each rsid in list, get pmids citing them
