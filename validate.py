@@ -13,7 +13,6 @@ import settings
 import ncbiutils
 import lanpros
 import argparse
-import wordcloudfornouns
 
 # def parse_args():
 #     """
@@ -28,16 +27,17 @@ import wordcloudfornouns
 #     return args
 
 # def main():
+RS_ID = "rs328"
+pmids = ncbiutils.get_pmids(RS_ID)
+#clinvar_pmids = [11389159,15695382,18607349,20104584,21520273,22703879,24348212,24728327,25637381,25741868,26586665,8896551,9971877]
+#abstracts = ncbiutils.get_abstracts(pmids)
+
+abstracts = ncbiutils.get_abstracts_from_list(pmids)
+#tokens = lanpros.tokenize_abstracts(abstracts)
+#tagged_abstracts = lanpros.tagged_abstracts(tokens)
+#results = lanpros.extract_nouns(tagged_abstracts)
 
 
-# pmids = ncbiutils.get_pmids(RS_ID)
-clinvar_pmids = [11389159,15695382,18607349,20104584,21520273,22703879,24348212,24728327,25637381,25741868,26586665,8896551,9971877]
-abstracts = ncbiutils.get_abstracts_from_list(clinvar_pmids)
-tokens = lanpros.tokenize_abstracts(abstracts)
-tagged_abstracts = lanpros.tagged_abstracts(tokens)
-results = lanpros.extract_nouns(tagged_abstracts)
-plots = wordcloudfornouns.create_wordcloud(results)
-
-for k, v in results.iteritems():
-	print k, v
+#for k, v in results.iteritems():
+#    print k, v
 # main()
