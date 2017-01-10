@@ -40,6 +40,7 @@ def print_update_history(db, cursor):
 prior to running updates, because they do not currently check
 on their own """
 def check_db(location):
+    global db_exists
     if os.path.isfile(location):
         db_exists = True
 
@@ -87,12 +88,12 @@ as well as a cursor.  It will also check if the DB exists or needs
 to be updated (can be configured to ignore updates).  Returns a tuple
 of (connection, cursor). """
 def initdb():
-    # Regardless of which of the following conditions is true 
-    # we're going to need to open db and cursor, so let's just
-    # go ahead and do it.  
-    if check_db(db_location):
+    check_db(db_location)
+    if db_exists is True:
+        print("Database already exists. Checking for updates")
         check_updates(db_location)
-    else:
+    elif db_exists is False:
+        print("Database does not exist. Creating now... This may take awhile")
         create_cache(db_location)
 
 initdb()
