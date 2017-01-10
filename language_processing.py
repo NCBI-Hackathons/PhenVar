@@ -105,7 +105,6 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
         for each_abstract in all_abstract_noun_counts:
 
             if key in each_abstract:
-<<<<<<< HEAD
 
                 single_abstract_count = float(each_abstract[key])
 
@@ -113,29 +112,6 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.3):
                     normalized_all_counts[key] = float(all_counts[key])/num_abstracts
 
     return normalized_all_counts
-<<<<<<< HEAD
-=======
-
-def create_wordcloud(normalized_all_counts):
-
-    word_cloud_list = [key * normalized_all_counts[key] for key in normalized_all_counts.keys()]
-
-    return word_cloud_list
-=======
-
-                single_abstract_count = float(each_abstract[key])
-
-                if (single_abstract_count/total_occurrences) < def_tags_per_abs:
-                    normalized_all_counts[key] = float(all_counts[key])/num_abstracts
-
-    return normalized_all_counts
-
-
->>>>>>> d44f8a7ef3618c00ce476c4f8c06c6a450ab1aa6
-
-
-
-
 
 #test implementation
 
@@ -146,10 +122,5 @@ abstracts = get_abstracts(toquery)
 t = tokenize_abstracts(abstracts)
 q = tagged_abstracts(t)
 n = extract_nouns(q)
-<<<<<<< HEAD
-print create_wordcloud(n)
-=======
 
-print n
->>>>>>> d44f8a7ef3618c00ce476c4f8c06c6a450ab1aa6
->>>>>>> 52c0af586249f30a8487203e30bc8726ab7e14c6
+print create_wordcloud(n)
