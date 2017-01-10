@@ -34,6 +34,8 @@ def insert_date(db, cursor, records):
 """ This function can be used to effectively print the entire update history
 for a given dbs update table """ 
 def print_update_history(db, cursor):
+    cursor.execute("""SELECT * FROM updatehist""")
+    print(cursor.fetchall())
     pass
 
 """ Check if db already exists.  This should always be run 
@@ -63,6 +65,7 @@ def create_cache(location):
     # Update our date table with the records we just added
     insert_date(sqlinfo[0], sqlinfo[1], 90)
     # Replace the following two with a dedicated function
+    print_update_history(sqlinfo[0], sqlinfo[1])
     disconnect(sqlinfo[0])
 
 """ Check if there are updates to our current
