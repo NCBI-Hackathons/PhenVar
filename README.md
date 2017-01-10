@@ -1,3 +1,4 @@
+# NCBI_Hackathon January 9-11, 2017
 # PhenVar
 PhenVar is designed to take one or more rsids and generate a list of PubMed IDs to query and generate novel associations between publications. It utilizes a local sqlite cache in a configurable location to keep a local copy of relevant srids, pmids, and the abstrat blobs for the pmids.  
 ## Known Issues / Improvements
