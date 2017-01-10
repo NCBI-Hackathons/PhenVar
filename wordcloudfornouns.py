@@ -1,4 +1,4 @@
-from language_processing import *
+from lanpros import *
 from wordcloud import *
 import matplotlib.pyplot as plt
 
@@ -9,14 +9,13 @@ def create_wordcloud(normalized_all_counts):
     word_cloud = WordCloud().generate(word_cloud_text)
     plt.imshow(word_cloud)
     plt.axis("off")
-    plt.savefig("figure.png")
-    #plt.show()
+    plt.show()
     return
 
 
 #test implementation
 """
-toquery=get_pmids("rs7412")
+toquery=get_pmids("rs12255372")
 
 abstracts = get_abstracts(toquery)
 
