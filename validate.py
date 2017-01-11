@@ -10,7 +10,7 @@ from os import path
 import random
 
 import settings
-import ncbiutilsTanya as ncbiutils
+import ncbiutils as ncbiutils
 import lanpros
 import argparse
 import wordcloudfornouns
