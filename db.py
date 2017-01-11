@@ -65,15 +65,19 @@ def create_cache(conn, cursor):
     # Update our date table with the records we just added
     list = ncbiutils.get_complete_rsids()
     spot = len(list) - 1
-    while spot != 0:
+    stop = spot - 100
+    while spot != stop:
         dict = ncbiutils.get_pmids("rs"+list[spot])
+        cursor.execute("""INSERT INTO rsids VALUES(?, ?)""", (list[spot], ",".join(dict["IdList"])))
         for y in dict["IdList"]:
             ylist=[]
             ylist.append(y)
             newdict = ncbiutils.get_abstracts_from_list(ylist)
             print("ID: " + y)
-            print("Abstract: ")
-            print(newdict[y])
+            #print("Abstract: ")
+            #print(newdict[y])
+            if newdict:
+                cursor.execute("""INSERT INTO pminfo VALUES (?, ?)""", (y, newdict[y]))
         time.sleep(5)
         spot = spot - 1
 
