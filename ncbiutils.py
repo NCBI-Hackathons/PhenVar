@@ -15,14 +15,24 @@ def get_complete_rsids():
     Entrez.email = email
     rsidlist = []
     numresults = 0 
+    retstart = 0
     search_string = "snp_pubmed_cited[sb]"
     search_results = Entrez.read(Entrez.esearch(db="snp", term=search_string,
-                                                retmax=100000, usehistory="y"))
+                                                retmax=100000, retstart=retstart, usehistory="y"))
     print("Found a total of " +
         search_results["Count"] + " results using search string '" + search_string + "'")
     numresults = search_results["Count"]
-    if int(numresults/100000) > 0:
-        print("yeahhhh")
+    rsidlist = rsidlist + search_results["IdList"]
+    additional_queries = int(int(numresults)/100000)
+    while additional_queries != 0:
+        retstart = retstart + 100000
+        search_results = Entrez.read(Entrez.esearch(db="snp", term=search_string,
+                                                    retmax=100000, retstart=retstart, usehistory="y"))
+        rsidlist = rsidlist + search_results["IdList"]
+        additional_queries = additional_queries - 1
+    return rsidlist
+
+        
     
     
 
@@ -106,4 +116,4 @@ def get_abstracts_from_list(pmids_list):
     print pmids_abstracts_dict
     return pmids_abstracts_dict
 
-get_complete_rsids()
+list = get_complete_rsids()
