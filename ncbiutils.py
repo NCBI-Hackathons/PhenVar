@@ -7,8 +7,8 @@ email = configuration["email"]
 
 
 """ 
-Get the dict to be used for an efetch of all
-rsids explicitly cited in pubmed. 
+Generate a list of rsids that are explicitly cited
+in a pubmed paper somewhere :-) 
 """
 
 def get_complete_rsids():
@@ -33,10 +33,6 @@ def get_complete_rsids():
     return rsidlist
 
         
-    
-    
-
-
 """
 Take a search term, intended to be an rs#,
 and return a dictionary that can be used to 
