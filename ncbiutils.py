@@ -48,6 +48,7 @@ def get_pmids(interm):
         interm = interm + " AND pubmed_snp_cited[sb]"
         Entrez.email = email     # Always tell NCBI who you are
         search_results = Entrez.read(Entrez.esearch(db="pubmed", term=interm,
+                                                    retmax=100000,
                                                     usehistory="y"))
         print("Found a total of " +
               search_results["Count"] + " results using search string '" + interm + "'")
@@ -59,6 +60,7 @@ def get_pmids(interm):
         Entrez.email = email     # Always tell NCBI who you are
         search_results = Entrez.read(Entrez.esearch(db="pubmed",
                                                     term=searchstring,
+                                                    retmax=100000,
                                                     usehistory="y"))
         print("Found a total of " +
               search_results["Count"] + " results using search string'" + searchstring + "'")
@@ -109,7 +111,21 @@ def get_abstracts_from_list(pmids_list):
                 #    print abstracts_list
                 # return abstracts_list
                 pmids_abstracts_dict[each_pmid] = sec.text
-    print pmids_abstracts_dict
+    #print pmids_abstracts_dict
     return pmids_abstracts_dict
 
 list = get_complete_rsids()
+spot = len(list) - 1
+while spot != 0:
+    dict = get_pmids("rs"+list[spot])
+    #print(dict)
+    for y in dict["IdList"]:
+        ylist=[]
+        ylist.append(y)
+        newdict = get_abstracts_from_list(ylist)
+        print("ID: " + y)
+        print("Abstract: ")
+        print(newdict[y])
+    #newlisty = get_abstracts(dict)
+    time.sleep(5)
+    spot = spot - 1
