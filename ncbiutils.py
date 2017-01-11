@@ -11,19 +11,20 @@ Generate a list of rsids that are explicitly cited
 in a pubmed paper somewhere :-) 
 """
 
+
 def get_complete_rsids():
     Entrez.email = email
     rsidlist = []
-    numresults = 0 
+    numresults = 0
     retstart = 0
     search_string = "snp_pubmed_cited[sb]"
     search_results = Entrez.read(Entrez.esearch(db="snp", term=search_string,
                                                 retmax=100000, retstart=retstart, usehistory="y"))
     print("Found a total of " +
-        search_results["Count"] + " results using search string '" + search_string + "'")
+          search_results["Count"] + " results using search string '" + search_string + "'")
     numresults = search_results["Count"]
     rsidlist = rsidlist + search_results["IdList"]
-    additional_queries = int(int(numresults)/100000)
+    additional_queries = int(int(numresults) / 100000)
     while additional_queries != 0:
         retstart = retstart + 100000
         search_results = Entrez.read(Entrez.esearch(db="snp", term=search_string,
@@ -32,7 +33,7 @@ def get_complete_rsids():
         additional_queries = additional_queries - 1
     return rsidlist
 
-        
+
 """
 Take a search term, intended to be an rs#,
 and return a dictionary that can be used to 
@@ -111,5 +112,5 @@ def get_abstracts_from_list(pmids_list):
                 #    print abstracts_list
                 # return abstracts_list
                 pmids_abstracts_dict[each_pmid] = sec.text
-    #print pmids_abstracts_dict
+    # print pmids_abstracts_dict
     return pmids_abstracts_dict
