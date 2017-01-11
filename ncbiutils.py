@@ -113,19 +113,3 @@ def get_abstracts_from_list(pmids_list):
                 pmids_abstracts_dict[each_pmid] = sec.text
     #print pmids_abstracts_dict
     return pmids_abstracts_dict
-
-list = get_complete_rsids()
-spot = len(list) - 1
-while spot != 0:
-    dict = get_pmids("rs"+list[spot])
-    #print(dict)
-    for y in dict["IdList"]:
-        ylist=[]
-        ylist.append(y)
-        newdict = get_abstracts_from_list(ylist)
-        print("ID: " + y)
-        print("Abstract: ")
-        print(newdict[y])
-    #newlisty = get_abstracts(dict)
-    time.sleep(5)
-    spot = spot - 1

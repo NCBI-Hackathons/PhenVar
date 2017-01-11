@@ -63,9 +63,19 @@ def create_cache(conn, cursor):
     # Get list of rsids cited in pubmed
     # For each rsid in list, get pmids citing them
     # Update our date table with the records we just added
-    insert_date(conn, cursor, 90)
-    # Replace the following two with a dedicated function
-    print_update_history(conn, cursor)
+    list = ncbiutils.get_complete_rsids()
+    spot = len(list) - 1
+    while spot != 0:
+        dict = ncbiutils.get_pmids("rs"+list[spot])
+        for y in dict["IdList"]:
+            ylist=[]
+            ylist.append(y)
+            newdict = ncbiutils.get_abstracts_from_list(ylist)
+            print("ID: " + y)
+            print("Abstract: ")
+            print(newdict[y])
+        time.sleep(5)
+        spot = spot - 1
 
 """ Check if there are updates to our current
 state of cachedb.  If so, download and append
