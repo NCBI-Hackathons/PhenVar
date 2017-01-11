@@ -1,6 +1,7 @@
 # PhenVar
 PhenVar is designed to take one or more rsids and generate a list of PubMed IDs to query and generate novel associations between publications. It utilizes a local sqlite cache in a configurable location to keep a local copy of relevant srids, pmids, and the abstrat blobs for the pmids.  
-
+## Installation Notes
+At the time of writing, the PyQt4 and SIP packages were broken in pip, so we had to compile them from source.  They make break a pip -r requirements.txt until that issue is resolved.  Otherwise, these scripts are meant to basically be standalone utilities that can be mixed and matched together to work in whatever fashion you are hoping for.  The validate.py can be run to test that all of the functionality is working, you should get two tables and two word clouds as output.  Please utilize the issue tracking on GitHub if you experience any issues or have feature requests.  
 ### settings.py
 settings.py is a file containing a single dictionary with configuration options that is imported into all of the other tools.  Configuration options you need can easily be added or changed.
 ### ncbiutils.py
