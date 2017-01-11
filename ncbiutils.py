@@ -14,11 +14,16 @@ rsids explicitly cited in pubmed.
 def get_complete_rsids():
     Entrez.email = email
     rsidlist = []
+    numresults = 0 
     search_string = "snp_pubmed_cited[sb]"
     search_results = Entrez.read(Entrez.esearch(db="snp", term=search_string,
                                                 retmax=100000, usehistory="y"))
     print("Found a total of " +
         search_results["Count"] + " results using search string '" + search_string + "'")
+    numresults = search_results["Count"]
+    if int(numresults/100000) > 0:
+        print("yeahhhh")
+    
     
 
 
@@ -101,3 +106,4 @@ def get_abstracts_from_list(pmids_list):
     print pmids_abstracts_dict
     return pmids_abstracts_dict
 
+get_complete_rsids()
