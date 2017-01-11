@@ -47,11 +47,11 @@ def parse_args():
 def main():
     args = parse_args()
     RS_ID = args.RS_ID
-#    print "Getting pmids from RS ID..."
-#    pmids = ncbiutils.get_pmids(RS_ID)
-    pmids = [15146469, 15060124, 8834249]
+    print "Getting pmids from RS ID..."
+    pmids = ncbiutils.get_pmids(RS_ID)
+    # pmids = [15146469, 15060124, 8834249]
     print "Getting abstracts from pmids..."
-    abstracts = ncbiutils.get_abstracts_from_list(pmids)
+    abstracts = ncbiutils.get_abstracts(pmids)
     print "Analyze using language process script..."
     tokens = lanpros.tokenize_abstracts(abstracts)
     tagged_abstracts = lanpros.tagged_abstracts(tokens)
