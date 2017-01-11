@@ -1,5 +1,5 @@
 import sqlite3
-#import ncbiutils
+import ncbiutils
 import time
 from settings import configuration
 import os
