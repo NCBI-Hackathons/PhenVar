@@ -6,6 +6,7 @@ from urllib2 import HTTPError
 import xml.etree.ElementTree as ET
 #from settings import configuration
 
+
 def annotate_RS_ID(RS_ID, email):
     """This script should return annotation asspciate with each RS ID. Can incorporate more information later"""
     Entrez.email = email
