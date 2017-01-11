@@ -95,6 +95,7 @@ def get_abstracts(results):
                 abstracts_list.append(sec.text)
     return abstracts_list
 
+
 def get_abstracts_from_list(pmids_list):
     abstracts_list = []
     pmids_abstracts_dict = {}
