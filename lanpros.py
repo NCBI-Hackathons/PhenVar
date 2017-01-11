@@ -1,6 +1,6 @@
 import nltk
 from Bio import Entrez
-import time # We need this if we want to filter based on age
+import time  # We need this if we want to filter based on age
 from urllib2 import HTTPError
 import xml.etree.ElementTree as ET
 from collections import Counter
@@ -9,8 +9,8 @@ import operator
 from os import path
 import random
 
-def tokenize_abstracts(abstracts):
 
+def tokenize_abstracts(abstracts):
     """ Takes a list of abstracts and breaks up each abstract into tokens """
 
     tokenized_abstracts_list = []
@@ -19,8 +19,8 @@ def tokenize_abstracts(abstracts):
         tokenized_abstracts_list.append(tokens)
     return tokenized_abstracts_list
 
-def tagged_abstracts(tokenized_abstracts_list):
 
+def tagged_abstracts(tokenized_abstracts_list):
     """ Takes a list of tokenized abstracts
     and tags them using the NLTK module for Natural Language Entities"""
 
@@ -30,15 +30,14 @@ def tagged_abstracts(tokenized_abstracts_list):
         tagged_abstracts_list.append(tagged)
     return tagged_abstracts_list
 
-def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.0):
 
+def extract_nouns(tagged_abstracts_list, def_tags_per_abs=0.0):
     """Takes a list of tuples of the form (word, tag) and returns a dictionary of counts for each
     word with tag "NN", "NNS", "NNP" or "NNPS" """
 
     noun_counter = []
     all_abstract_noun_counts = []
     normalized_all_counts = {}
-
 
     for tags in tagged_abstracts_list:
 
@@ -48,13 +47,13 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.0):
 
             if tag[1] == "NN" or tag[1] == "NNS" or tag[1] == "NNP" or tag[1] == "NNPS":
 
-
-                per_abstract_noun_counts.append(str(tag[0].encode('ascii', 'ignore')))
+                per_abstract_noun_counts.append(
+                    str(tag[0].encode('ascii', 'ignore')))
 
                 noun_counter.append(str(tag[0].encode('ascii', 'ignore')))
 
-
-        all_abstract_noun_counts.append(dict(Counter(per_abstract_noun_counts)))
+        all_abstract_noun_counts.append(
+            dict(Counter(per_abstract_noun_counts)))
 
     all_counts = dict(Counter(noun_counter))
 
@@ -72,27 +71,28 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs = 0.0):
 
                 if def_tags_per_abs != 0:
 
-                    if (single_abstract_count/total_occurrences) < def_tags_per_abs:
+                    if (single_abstract_count / total_occurrences) < def_tags_per_abs:
 
-                        normalized_all_counts[key] = float(all_counts[key])/num_abstracts
+                        normalized_all_counts[key] = float(
+                            all_counts[key]) / num_abstracts
 
                 else:
-                    
-                    normalized_all_counts[key] = float(all_counts[key])/num_abstracts
 
+                    normalized_all_counts[key] = float(
+                        all_counts[key]) / num_abstracts
 
     return normalized_all_counts
 
-def extract_nouns_filter(tagged_abstracts_list, def_tags_per_abs = 0.0):
 
+def extract_nouns_filter(tagged_abstracts_list, def_tags_per_abs=0.0):
     """Takes a list of tuples of the form (word, tag) and returns a dictionary of counts for each
     word with tag "NN", "NNS", "NNP" or "NNPS.
     This function is different from the function extract_nouns in that this function is doing some external filtering. Right now, it will filter using a predefined list of termed defined from using textools (TODO: add more info here)" """
-    filter_list = ['polymorphism', 'polymorphisms', 'nucleotide', 'nucleotides', 'snp', 'snps', 'allele', 'alleles','gene', 'genes', 'genotype', 'genotypes', 'genotyped',  'single', 'singles', 'genetic', 'genetics', 'study', 'studies','variant', 'variants']
+    filter_list = ['polymorphism', 'polymorphisms', 'nucleotide', 'nucleotides', 'snp', 'snps', 'allele', 'alleles', 'gene', 'genes',
+                   'genotype', 'genotypes', 'genotyped',  'single', 'singles', 'genetic', 'genetics', 'study', 'studies', 'variant', 'variants']
     noun_counter = []
     all_abstract_noun_counts = []
     normalized_all_counts = {}
-
 
     for tags in tagged_abstracts_list:
 
@@ -103,13 +103,13 @@ def extract_nouns_filter(tagged_abstracts_list, def_tags_per_abs = 0.0):
             if tag[1] == "NN" or tag[1] == "NNS" or tag[1] == "NNP" or tag[1] == "NNPS":
                 if tag[0].lower() not in filter_list:
 
-
-                    per_abstract_noun_counts.append(str(tag[0].encode('ascii', 'ignore')))
+                    per_abstract_noun_counts.append(
+                        str(tag[0].encode('ascii', 'ignore')))
 
                     noun_counter.append(str(tag[0].encode('ascii', 'ignore')))
 
-
-        all_abstract_noun_counts.append(dict(Counter(per_abstract_noun_counts)))
+        all_abstract_noun_counts.append(
+            dict(Counter(per_abstract_noun_counts)))
 
     all_counts = dict(Counter(noun_counter))
 
@@ -127,13 +127,14 @@ def extract_nouns_filter(tagged_abstracts_list, def_tags_per_abs = 0.0):
 
                 if def_tags_per_abs != 0:
 
-                    if (single_abstract_count/total_occurrences) < def_tags_per_abs:
+                    if (single_abstract_count / total_occurrences) < def_tags_per_abs:
 
-                        normalized_all_counts[key] = float(all_counts[key])/num_abstracts
+                        normalized_all_counts[key] = float(
+                            all_counts[key]) / num_abstracts
 
                 else:
-                    
-                    normalized_all_counts[key] = float(all_counts[key])/num_abstracts
 
+                    normalized_all_counts[key] = float(
+                        all_counts[key]) / num_abstracts
 
     return normalized_all_counts
