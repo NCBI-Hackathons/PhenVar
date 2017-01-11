@@ -6,9 +6,26 @@ from settings import configuration
 email = configuration["email"]
 
 
+""" 
+Get the dict to be used for an efetch of all
+rsids explicitly cited in pubmed. 
+"""
+
+def get_complete_rsids():
+    Entrez.email = email
+    search_string = "snp_pubmed_cited[sb]"
+    search_results = Entrez.read(Entrez.esearch(db="dbsnp", term=search_string,
+                                                usehistory="y"))
+    print("Found a total of " +
+        search_results["Count"] + " results using search string '" + search_string + "'")
+    #return search_results
+    print search_results
+
+
 """
 Take a search term, intended to be an rs#,
-and return a list of pmids
+and return a dictionary that can be used to 
+efetch later
 """
 
 
@@ -83,3 +100,5 @@ def get_abstracts_from_list(pmids_list):
                 pmids_abstracts_dict[each_pmid] = sec.text
     print pmids_abstracts_dict
     return pmids_abstracts_dict
+
+get_complete_rsids()
