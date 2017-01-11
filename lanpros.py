@@ -89,7 +89,7 @@ def extract_nouns_filter(tagged_abstracts_list, def_tags_per_abs=0.0):
     word with tag "NN", "NNS", "NNP" or "NNPS.
     This function is different from the function extract_nouns in that this function is doing some external filtering. Right now, it will filter using a predefined list of termed defined from using textools (TODO: add more info here)" """
     filter_list = ['polymorphism', 'polymorphisms', 'nucleotide', 'nucleotides', 'snp', 'snps', 'allele', 'alleles', 'gene', 'genes',
-                   'genotype', 'genotypes', 'genotyped',  'single', 'singles', 'genetic', 'genetics', 'study', 'studies', 'variant', 'variants']
+                   'genotype', 'genotypes', 'genotyped',  'single', 'singles', 'genetic', 'genetics', 'study', 'studies', 'variant', 'variants', 'analysis', 'analyses']
     noun_counter = []
     all_abstract_noun_counts = []
     normalized_all_counts = {}
