@@ -1,4 +1,3 @@
-
 from lanpros import *
 from wordcloud import *
 import matplotlib
@@ -12,9 +11,4 @@ def create_wordcloud(normalized_all_counts, outfig):
     word_cloud = WordCloud().generate(word_cloud_text)
     fig = plt.imshow(word_cloud)
     plt.axis("off")
-
-#    plt.savefig("figure.png")
-#    plt.show()
-    # plt.savefig("/home/ubuntu/git_repos/Phenotypic_Clustering_of_Variants/plots/rs328_wordcloud_prefilter.png")
     plt.savefig(outfig)
-    return
