@@ -45,16 +45,3 @@ with open(sys.argv[1], "r") as file:
 for i in output:
 	print(*i, sep=' ', end='\n')
 
-
-# RS_ID_list = [328, 45468592, 193922659, 199474738]
-# results = annotate_RS_ID(RS_ID_list, "tnphung@ucla.edu")
-# header = ["RS_ID", "Alt_AF", "clinical_sig", "chr", "func"]
-# print "\t".join(item for item in header)
-# for k, v in results.iteritems():
-#     print k, v[0], v[1], v[2], v[3]
-    # toprint = [k, v[0], v[1], v[2], v[3]]
-    # if toprint[0] != 'None':
-    #     print "\t".join(item for item in toprint)
-    # else:
-    #     toprint = ['NA', v[0], v[1], v[2], v[3]]
-    #     print "\t".join(item for item in toprint)
