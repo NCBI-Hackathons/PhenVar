@@ -38,7 +38,7 @@ with open(sys.argv[1], "r") as file:
 		RS_ID.append(rs)
 # print RS_ID
 for each_RS in RS_ID:
-	pmids_dict = ncbiutils.get_pmids(RS_ID)
+	pmids_dict = ncbiutils.get_pmids(each_RS)
 	#print pmids_dict
 #clinvar_pmids = [11389159,15695382,18607349,20104584,21520273,22703879,24348212,24728327,25637381,25741868,26586665,8896551,9971877]
 #abstracts = ncbiutils.get_abstracts(pmids)
