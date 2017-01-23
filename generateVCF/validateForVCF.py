@@ -29,41 +29,28 @@ import sys
 
 # def main():
 RS_pmids_abstracts_dict = {}
-RS_ID = ['3094315']
-# with open(sys.argv[1], "r") as file:
-# 	for line in file:
-# 		line = line.rstrip("\n")
-# 		line = line.split("\t")
-# 		rs = str('rs')+str(line[2])
-# 		RS_ID.append(rs)
-# print RS_ID
+RS_ID = []
+with open(sys.argv[1], "r") as file:
+	for line in file:
+		line = line.rstrip("\n")
+		line = line.split("\t")
+		rs = str('rs')+str(line[2])
+		RS_ID.append(rs)
+
 for each_RS in RS_ID:
 	pmids_dict = ncbiutils.get_pmids(each_RS)
-	#print pmids_dict
-#clinvar_pmids = [11389159,15695382,18607349,20104584,21520273,22703879,24348212,24728327,25637381,25741868,26586665,8896551,9971877]
-#abstracts = ncbiutils.get_abstracts(pmids)
 	pmids_list = pmids_dict["IdList"]
-	# print len(pmids_list)
 	abstracts = ncbiutils.get_abstracts_from_list(pmids_list)
-	# print len(abstracts)
-
 	RS_pmids_abstracts_dict[each_RS] = abstracts
 
-for k, v in RS_pmids_abstracts_dict.iteritems():
-	for a, b in v.iteritems():
-		print k, a
+tokens = lanpros.tokenize_abstracts(RS_pmids_abstracts_dict)
 
-# tokens = lanpros.tokenize_abstracts(RS_pmids_abstracts_dict)
-# #print tokens
+tagged_abstracts = lanpros.tagged_abstracts(tokens)
 
-# tagged_abstracts = lanpros.tagged_abstracts(tokens)
-# #print tagged_abstracts
-
-# nouns = lanpros.extract_nouns(tagged_abstracts)
-# for rs, values in nouns.iteritems():
-# 	for pmid, words in values.iteritems():
-# 		toprint = [rs, pmid]
-# 		for word in words:
-# 			toprint.append(word)
-# 		print " ".join(item for item in toprint)
-		#print toprint
+nouns = lanpros.extract_nouns(tagged_abstracts)
+for rs, values in nouns.iteritems():
+	for pmid, words in values.iteritems():
+		toprint = [rs, pmid]
+		for word in words:
+			toprint.append(word)
+		print " ".join(item for item in toprint)
