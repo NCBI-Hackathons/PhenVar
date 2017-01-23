@@ -52,5 +52,5 @@ for rs, values in nouns.iteritems():
 	for pmid, words in values.iteritems():
 		toprint = [rs, pmid]
 		for word in words:
-			toprint.append(word)
+			toprint = [rs, pmid, word]
 			print " ".join(item for item in toprint)
