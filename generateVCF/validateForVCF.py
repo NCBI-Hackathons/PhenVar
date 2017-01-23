@@ -50,8 +50,8 @@ for each_RS in RS_ID:
 	RS_pmids_abstracts_dict[each_RS] = abstracts
 
 for k, v in RS_pmids_abstracts_dict.iteritems():
-	for i in v:
-		print k, v
+	for a, b in v.iteritems():
+		print k, a
 
 # tokens = lanpros.tokenize_abstracts(RS_pmids_abstracts_dict)
 # #print tokens
