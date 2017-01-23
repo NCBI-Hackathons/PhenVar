@@ -49,17 +49,21 @@ for each_RS in RS_ID:
 
 	RS_pmids_abstracts_dict[each_RS] = abstracts
 
-tokens = lanpros.tokenize_abstracts(RS_pmids_abstracts_dict)
-#print tokens
+for k, v in RS_pmids_abstracts_dict.iteritems():
+	for i in v:
+		print k, v
 
-tagged_abstracts = lanpros.tagged_abstracts(tokens)
-#print tagged_abstracts
+# tokens = lanpros.tokenize_abstracts(RS_pmids_abstracts_dict)
+# #print tokens
 
-nouns = lanpros.extract_nouns(tagged_abstracts)
-for rs, values in nouns.iteritems():
-	for pmid, words in values.iteritems():
-		toprint = [rs, pmid]
-		for word in words:
-			toprint.append(word)
-		print " ".join(item for item in toprint)
+# tagged_abstracts = lanpros.tagged_abstracts(tokens)
+# #print tagged_abstracts
+
+# nouns = lanpros.extract_nouns(tagged_abstracts)
+# for rs, values in nouns.iteritems():
+# 	for pmid, words in values.iteritems():
+# 		toprint = [rs, pmid]
+# 		for word in words:
+# 			toprint.append(word)
+# 		print " ".join(item for item in toprint)
 		#print toprint
