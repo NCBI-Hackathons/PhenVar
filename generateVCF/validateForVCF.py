@@ -29,13 +29,13 @@ import sys
 
 # def main():
 RS_pmids_abstracts_dict = {}
-RS_ID = []
-with open(sys.argv[1], "r") as file:
-	for line in file:
-		line = line.rstrip("\n")
-		line = line.split("\t")
-		rs = str('rs')+str(line[2])
-		RS_ID.append(rs)
+RS_ID = ['3094315']
+# with open(sys.argv[1], "r") as file:
+# 	for line in file:
+# 		line = line.rstrip("\n")
+# 		line = line.split("\t")
+# 		rs = str('rs')+str(line[2])
+# 		RS_ID.append(rs)
 # print RS_ID
 for each_RS in RS_ID:
 	pmids_dict = ncbiutils.get_pmids(each_RS)
