@@ -52,5 +52,6 @@ for rs, values in nouns.iteritems():
 	for pmid, words in values.iteritems():
 		toprint = [rs, pmid]
 		for word in words:
-			toprint = [rs, pmid, word]
-			print "\t".join(item for item in toprint)
+			if len(word) != 1:
+				toprint = [rs, pmid, word]
+				print "\t".join(item for item in toprint)
