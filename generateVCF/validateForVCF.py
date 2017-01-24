@@ -33,6 +33,7 @@ RS_ID = []
 with open(sys.argv[1], "r") as file:
 	for line in file:
 		line = line.rstrip("\n")
+		line = line.split
 		rs = str('rs')+str(line[0])
 		RS_ID.append(rs)
 for i in RS_ID:
