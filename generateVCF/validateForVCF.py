@@ -36,23 +36,22 @@ with open(sys.argv[1], "r") as file:
 		line = line.split()
 		rs = str('rs')+str(line[0])
 		RS_ID.append(rs)
-for i in RS_ID:
-	print i
-# for each_RS in RS_ID:
-# 	pmids_dict = ncbiutils.get_pmids(each_RS)
-# 	pmids_list = pmids_dict["IdList"]
-# 	abstracts = ncbiutils.get_abstracts_from_list(pmids_list)
-# 	RS_pmids_abstracts_dict[each_RS] = abstracts
 
-# tokens = lanpros.tokenize_abstracts(RS_pmids_abstracts_dict)
+for each_RS in RS_ID:
+	pmids_dict = ncbiutils.get_pmids(each_RS)
+	pmids_list = pmids_dict["IdList"]
+	abstracts = ncbiutils.get_abstracts_from_list(pmids_list)
+	RS_pmids_abstracts_dict[each_RS] = abstracts
 
-# tagged_abstracts = lanpros.tagged_abstracts(tokens)
+tokens = lanpros.tokenize_abstracts(RS_pmids_abstracts_dict)
 
-# nouns = lanpros.extract_nouns(tagged_abstracts)
-# for rs, values in nouns.iteritems():
-# 	for pmid, words in values.iteritems():
-# 		toprint = [rs, pmid]
-# 		for word in words:
-# 			if len(word) != 1:
-# 				toprint = [rs, pmid, word]
-# 				print "\t".join(item for item in toprint)
+tagged_abstracts = lanpros.tagged_abstracts(tokens)
+
+nouns = lanpros.extract_nouns(tagged_abstracts)
+for rs, values in nouns.iteritems():
+	for pmid, words in values.iteritems():
+		toprint = [rs, pmid]
+		for word in words:
+			if len(word) != 1:
+				toprint = [rs, pmid, word]
+				print "\t".join(item for item in toprint)
