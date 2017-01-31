@@ -6,3 +6,4 @@ sqlalchemy
 progressbar2
 pillow
 flask
+uwsgi
