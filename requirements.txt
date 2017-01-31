@@ -1,5 +1,8 @@
 biopython
 nltk
 wordcloud
-PIL
 matplotlib
+sqlalchemy
+progressbar2
+pillow
+flask
