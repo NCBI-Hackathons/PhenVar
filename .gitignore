@@ -1,6 +1,5 @@
 *.pyc
 *.swp
 data/
-*.png
 *.idea
 *.sqlite3
