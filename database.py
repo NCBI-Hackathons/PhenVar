@@ -32,7 +32,7 @@ class Article(Base):
         tokens = nltk.word_tokenize(self.abstract)
         tagged = nltk.pos_tag(tokens)
         for tagged_word in tagged:
-            if tagged_word[1] in ("NN", "NNS", "NNP", "NNPS") and tagged_word[0] not in filter_list:
+            if tagged_word[1] in ("NN", "NNS", "NNP", "NNPS") and tagged_word[0] not in filter_list and len(tagged_word[0]) != 1:
                 nouns.append(tagged_word[0])
         return nouns
 
