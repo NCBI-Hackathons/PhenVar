@@ -11,7 +11,7 @@ def index():
 
 @application.route("/results/", methods=["GET", "POST"])
 def results():
-    rsid_string = request.form["rsids"]
+    rsid_string = request.form["rsids"].strip("rs")
     rsid_list = rsid_string.split()
     wordcloud_text = word_blob(rsid_list)
     return render_template('wordcloud.html', wordcloud_text=wordcloud_text)
