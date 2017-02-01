@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Date
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
-from settings import DATABASE_STRING
+from settings import DATABASE_STRING, filter_list
 from ncbiutils import get_pubmed_articles
 import nltk
 import progressbar
@@ -32,7 +32,7 @@ class Article(Base):
         tokens = nltk.word_tokenize(self.abstract)
         tagged = nltk.pos_tag(tokens)
         for tagged_word in tagged:
-            if tagged_word[1] in ("NN", "NNS", "NNP", "NNPS"):
+            if tagged_word[1] in ("NN", "NNS", "NNP", "NNPS") and tagged_word[0] not in filter_list:
                 nouns.append(tagged_word[0])
         return nouns
 
