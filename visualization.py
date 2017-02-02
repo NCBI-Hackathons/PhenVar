@@ -1,6 +1,9 @@
 from wordcloud import *
 import matplotlib.pyplot as plt
 from database import session, RSIDCitation, Article
+import hashlib
+from settings import WORDCLOUD_STORAGE
+import os
 
 
 def word_blob(rsid_list):
@@ -28,3 +31,12 @@ def wordcloud_from_rsids(rsid_list, output_path=None):
         plt.axis("off")
         plt.savefig(output_path)
     return word_cloud
+
+
+def generate_wordcloud(rsid_list):
+    rsid_string = " ".join(rsid_list)
+    hash_object = hashlib.sha1(rsid_string.encode())
+    hashed_file_name = "{}.png".format(hash_object.hexdigest())
+    hashed_file_path = os.path.join(WORDCLOUD_STORAGE, hashed_file_name)
+    wordcloud_from_rsids(rsid_list, hashed_file_path)
+    return hashed_file_name

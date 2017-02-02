@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Date
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
-from settings import DATABASE_STRING, filter_list
+from settings import DATABASE_STRING, FILTER_LIST
 from ncbiutils import get_pubmed_articles
 import nltk
 import progressbar
@@ -31,9 +31,13 @@ class Article(Base):
         nouns = []
         tokens = nltk.word_tokenize(self.abstract)
         tagged = nltk.pos_tag(tokens)
-        for tagged_word in tagged:
-            if tagged_word[1] in ("NN", "NNS", "NNP", "NNPS") and tagged_word[0] not in filter_list and len(tagged_word[0]) != 1:
-                nouns.append(tagged_word[0])
+        for word in [tagged_word[0] for tagged_word in tagged if tagged_word[1] in ("NN", "NNS", "NNP", "NNPS")
+                     and tagged_word[0] not in FILTER_LIST
+                     and len(tagged_word[0]) > 1]:
+            nouns.append(word)
+        #for tagged_word in tagged:
+        #    if tagged_word[1] in ("NN", "NNS", "NNP", "NNPS") and tagged_word[0] not in filter_list and len(tagged_word[0]) != 1:
+        #        nouns.append(tagged_word[0])
         return nouns
 
     def unique_abstract_nouns(self):
