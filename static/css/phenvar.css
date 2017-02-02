@@ -4,9 +4,25 @@
     margin-right:auto;
     display:block;
 }
+
 .info_paragraph {
     width:700px;
     margin-left:auto;
     margin-right:auto;
     display:block;
+}
+
+#results_container {
+    width:700px;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+
+img#wordcloud_image {
+    width:100%;
+}
+
+.navbar {
+    margin-bottom: 0;
 }
