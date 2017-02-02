@@ -3,8 +3,8 @@ configuration = {
     "direct_query": False,
 }
 
-# Directory to store generated files, point url /wc to this location on your webserver
-WORDCLOUD_STORAGE = '/opt/generated_wordclouds'
+# Directory to store generated files
+WORDCLOUD_STORAGE = '/opt/PhenVar/static/wc'
 
 # Database string to be used by the sqlalchemy ORM
 DATABASE_STRING = "sqlite:///db.sqlite3"
