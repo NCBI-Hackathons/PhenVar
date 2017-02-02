@@ -3,4 +3,4 @@
 data/
 *.idea
 *.sqlite3
-static/wc/*
+static/wc/*.png
