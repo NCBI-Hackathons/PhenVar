@@ -25,11 +25,18 @@ def wordcloud_from_rsids(rsid_list, output_path=None):
     for article in articles:
         noun_list += article.abstract_nouns()
     full_text = " ".join(noun_list)
-    word_cloud = WordCloud().generate(full_text)
+    word_cloud = WordCloud(width=1600, height=800).generate(full_text)
     if output_path is not None:
+        #plt.figure(figsize=(20, 10), facecolor='k')
+        ##plt.tight_layout(pad=0)
+        #plt.imshow(word_cloud)
+        #plt.axis("off")
+        plt.figure(figsize=(20, 10), facecolor='k')
         plt.imshow(word_cloud)
         plt.axis("off")
-        plt.savefig(output_path)
+        plt.tight_layout(pad=0)
+        plt.show()
+        plt.savefig(output_path, facecolor='k', bbox_inches='tight')
     return word_cloud
 
 

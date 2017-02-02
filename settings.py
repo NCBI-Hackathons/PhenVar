@@ -4,7 +4,7 @@ configuration = {
 }
 
 # Directory to store generated files
-WORDCLOUD_STORAGE = '/opt/PhenVar/static/wc'
+WORDCLOUD_STORAGE = 'static/wc'
 
 # Database string to be used by the sqlalchemy ORM
 DATABASE_STRING = "sqlite:///db.sqlite3"
