@@ -1,5 +1,8 @@
 {% extends 'main.html' %}
 {% block content %}
-  <img id="wordcloud_image" style="width:100%;" src="/static/wc/{{ wordcloud_file_name }}">
-
+{% if wordcloud_file_name %}
+    <img id="wordcloud_image" style="width:100%;" src="/static/wc/{{ wordcloud_file_name }}">
+{% else %}
+    <h2>No results found!</h2>
+{% endif %}
 {% endblock %}
