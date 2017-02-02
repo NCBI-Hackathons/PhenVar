@@ -30,7 +30,6 @@ def create_wordcloud_from_rsids(rsid_list, output_path=None):
 
 
 # Function results in IndexError if no results are found
-"""
 def generate_wordcloud(rsid_list):
     rsid_string = " ".join(rsid_list)
     hash_object = hashlib.sha1(rsid_string.encode())
@@ -50,3 +49,4 @@ def generate_wordcloud(rsid_list):
         return fleetingcloud
     except IndexError:
         return ""
+"""
