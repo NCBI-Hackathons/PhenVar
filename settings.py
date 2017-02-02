@@ -13,7 +13,7 @@ DATABASE_STRING = "sqlite:///db.sqlite3"
 FILTER_LIST = [
     'polymorphism', 'polymorphisms', 'nucleotide', 'nucleotides', 'snp', 'snps', 'allele', 'alleles', 'gene',
     'genes', 'genotype', 'genotypes', 'genotyped',  'single', 'singles', 'genetic', 'genetics', 'study', 'studies',
-    'variant', 'variants', 'analysis', 'analyses''association', 'study', 'SNPs', 'gene', 'genes', 'polymorphisms',
+    'variant', 'variants', 'analysis', 'analyses', 'association', 'study', 'SNPs', 'gene', 'genes', 'polymorphisms',
     'risk', 'studies', 'variants', 'analysis', 'results', 'disease', 'associations', 'SNP', 'controls', 'patients',
     'data', 'susceptibility', 'cases', 'population', 'evidence', 'role', 'loci', 'individuals', 'variation', 'findings',
     'factors', 'allele', 'candidate', 'region', 'effects', 'effect', 'polymorphism', 'analyses', 'levels', 'cancer',
