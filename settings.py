@@ -4,7 +4,7 @@ configuration = {
 }
 
 # Directory to store generated files, point url /wc to this location on your webserver
-WORDCLOUD_STORAGE = '/var/tmp/wordclouds'
+WORDCLOUD_STORAGE = '/opt/generated_wordclouds'
 
 # Database string to be used by the sqlalchemy ORM
 DATABASE_STRING = "sqlite:///db.sqlite3"
