@@ -4,6 +4,7 @@ from settings import WORDCLOUD_STORAGE
 import matplotlib.pyplot as plt
 import hashlib
 import os
+import tempfile
 
 
 def word_blob(rsid_list):
@@ -29,6 +30,7 @@ def create_wordcloud_from_rsids(rsid_list, output_path=None):
 
 
 # Function results in IndexError if no results are found
+"""
 def generate_wordcloud(rsid_list):
     rsid_string = " ".join(rsid_list)
     hash_object = hashlib.sha1(rsid_string.encode())
@@ -37,5 +39,14 @@ def generate_wordcloud(rsid_list):
     try:
         create_wordcloud_from_rsids(rsid_list, hashed_file_path)
         return hashed_file_name
+    except IndexError:
+        return ""
+"""
+def generate_wordcloud(rsid_list):
+    rsid_string = " ".join(rsid_list)
+    fleetingcloud = tempfile.SpooledTemporaryFile(max_size=0, mode='w+b', buffering=None, encoding=None, newline=None, suffix='', prefix='tmp', dir=None)
+    try:
+        create_wordcloud_from_rsids(rsid_list, fleetingcloud)
+        return fleetingcloud
     except IndexError:
         return ""
