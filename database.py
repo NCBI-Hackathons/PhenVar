@@ -2,16 +2,11 @@ from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Date
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
-from settings import DATABASE_STRING, FILTER_LIST
+from settings import DATABASE_STRING, FILTER_LIST, MAPPING_FILE
 from ncbiutils import get_pubmed_articles
-from nltk.corpus.reader.plaintext import PlaintextCorpusReader
+import json
 import nltk
 import progressbar
-
-
-# Train nltk
-#tokenizer = nltk.tokenize.RegexpTokenizer(r'\w+|[^\w\s]+')
-#tagger = nltk.UnigramTagger(nltk.corpus.brown.tagged_sents())
 
 
 engine = create_engine(
@@ -100,6 +95,43 @@ class RSIDCitation(Base):
         return [(self.rsid, self.pmid, noun) for noun in article.unique_abstract_nouns()]
 
 
+def build_complete_noun_mapping():
+    mapping = {}
+    articles = session.query(Article).all()
+    count = 0
+    with progressbar.ProgressBar(max_value=len(articles)) as bar:
+        for article in articles:
+            count += 1
+            mapping[str(article.pmid)] = sorted(article.abstract_nouns())
+            bar.update(count)
+    with open(MAPPING_FILE, 'w') as json_file:
+        json.dump(mapping, json_file, sort_keys=True, indent=4)
+
+
+def save_noun_mapping(mapping):
+    with open(MAPPING_FILE, 'w') as json_file:
+        json.dump(mapping, json_file, sort_keys=True, indent=4)
+
+
+def load_noun_mapping():
+    with open(MAPPING_FILE, 'r') as json_file:
+        return json.load(json_file)
+
+
+def add_articles_to_mapping(articles):
+    mapping = load_noun_mapping()
+    count = 0
+    with progressbar.ProgressBar(max_value=len(articles)) as bar:
+        for article in articles:
+            count += 1
+            mapping[str(article.pmid)] = sorted(article.abstract_nouns())
+            bar.update(count)
+    save_noun_mapping(mapping)
+
+
+article_noun_mapping = load_noun_mapping()
+
+
 # Create the database schema defined above
 def initialize_database():
     Base.metadata.create_all(engine)
@@ -174,11 +206,14 @@ def load_from_pubmed_article(article):
 def load_all_data():
     pubmed_articles = get_pubmed_articles()
     count = 0
+    print("Loading articles into database...")
     with progressbar.ProgressBar(max_value=len(pubmed_articles)) as bar:
         for article in pubmed_articles:
             count += 1
             load_from_pubmed_article(article)
             bar.update(count)
+    print("Loading article abstract nouns into mapping file...")
+
 
 
 # If load_all_data breaks partway through, only loads data for articles that aren't in the database
