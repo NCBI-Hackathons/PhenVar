@@ -200,6 +200,7 @@ def load_from_pubmed_article(article):
             pmid=article.pmid,
             author_id=author_model.id
         )
+    return article_model
 
 
 # Get all cited pubmed articles, load associated data
@@ -212,8 +213,6 @@ def load_all_data():
             count += 1
             load_from_pubmed_article(article)
             bar.update(count)
-    print("Loading article abstract nouns into mapping file...")
-
 
 
 # If load_all_data breaks partway through, only loads data for articles that aren't in the database
@@ -232,12 +231,14 @@ def load_data_not_present():
 def update_data():
     latest_change = session.query(func.max(Article.date_revised)).first()[0]
     updated_pubmed_articles = get_pubmed_articles(since_date=latest_change)
+    article_models = []
     count = 0
     with progressbar.ProgressBar(max_value=len(updated_pubmed_articles)) as bar:
         for article in updated_pubmed_articles:
             count += 1
-            load_from_pubmed_article(article)
+            article_model = load_from_pubmed_article(article)
+            article_models.append(article_model)
             bar.update(count)
+    print("Updating mapping file...")
+    add_articles_to_mapping(article_models)
 
-# Used in building nltk corpus from
-#def build_corpus():
