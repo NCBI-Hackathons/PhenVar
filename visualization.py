@@ -1,6 +1,7 @@
 from wordcloud import *
-from database import session, RSIDCitation, Article
+from database import session, RSIDCitation, Article, article_noun_mapping
 from settings import WORDCLOUD_STORAGE
+import nltk
 import matplotlib.pyplot as plt
 import hashlib
 import os
@@ -14,8 +15,8 @@ def word_blob(rsid_list):
         ).filter(
             RSIDCitation.rsid.in_(rsid_list)
         ).distinct().all()
-    for article in articles:
-        noun_list += article.abstract_nouns()
+    for pmid in [str(article.pmid) for article in articles]:
+        noun_list += article_noun_mapping[pmid]
     return " ".join(noun_list)
 
 

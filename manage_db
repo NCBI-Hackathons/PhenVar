@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from database import initialize_database, load_all_data, load_data_not_present, update_data
+from database import initialize_database, load_all_data, load_data_not_present, update_data, build_complete_noun_mapping
 from sys import argv
 
 
@@ -10,6 +10,7 @@ help_text = """USAGE:
     - load          loads all snp cited articles from pubmed
     - resume        if load fails partway through, loads any articles that were not added to the database
     - update        loads any articles that have been added/modified since latest update
+    - build_json    builds json noun cache from articles in database
 """
 
 def help():
@@ -23,6 +24,7 @@ commands = {
     "load": load_all_data,
     "resume": load_data_not_present,
     "update": update_data,
+    "build_json": build_complete_noun_mapping(),
 }
 
 if len(argv) == 2 and argv[1] in commands:
