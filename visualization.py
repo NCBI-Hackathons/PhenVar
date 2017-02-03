@@ -4,14 +4,16 @@ from settings import WORDCLOUD_STORAGE
 import matplotlib.pyplot as plt
 import hashlib
 import os
-import tempfile
 
 
 def word_blob(rsid_list):
     noun_list = []
-    pmid_list = [pmid_tuple[0] for pmid_tuple
-                 in session.query(RSIDCitation.pmid).filter(RSIDCitation.rsid.in_(rsid_list)).all()]
-    articles = session.query(Article).filter(Article.pmid.in_(pmid_list)).all()
+    articles = session.query(Article).join(
+            RSIDCitation,
+            Article.pmid == RSIDCitation.pmid
+        ).filter(
+            RSIDCitation.rsid.in_(rsid_list)
+        ).distinct().all()
     for article in articles:
         noun_list += article.abstract_nouns()
     return " ".join(noun_list)

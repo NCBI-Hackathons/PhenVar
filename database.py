@@ -28,16 +28,11 @@ class Article(Base):
     # Processes abstract with nltk library and returns list of nouns
     def abstract_nouns(self):
         # Tokenize and tag abstracts
-        nouns = []
-        tokens = nltk.word_tokenize(self.abstract)
+        tokens = nltk.word_tokenize(self.abstract.lower())
         tagged = nltk.pos_tag(tokens)
-        nouns = [tagged_word[0].lower() for tagged_word in tagged if tagged_word[1] in ("NN", "NNS", "NNP", "NNPS")
-                     and tagged_word[0].lower() not in FILTER_LIST
+        nouns = [tagged_word[0] for tagged_word in tagged if tagged_word[1] in ("NN", "NNS", "NNP", "NNPS")
+                     and tagged_word[0] not in FILTER_LIST
                      and len(tagged_word[0]) > 1]
-        #    nouns.append(word)
-        #for tagged_word in tagged:
-        #    if tagged_word[1] in ("NN", "NNS", "NNP", "NNPS") and tagged_word[0] not in filter_list and len(tagged_word[0]) != 1:
-        #        nouns.append(tagged_word[0])
         return nouns
 
     def unique_abstract_nouns(self):
