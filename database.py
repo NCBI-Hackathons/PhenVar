@@ -8,6 +8,11 @@ import nltk
 import progressbar
 
 
+# Train nltk
+tokenizer = nltk.tokenize.RegexpTokenizer(r'\w+|[^\w\s]+')
+tagger = nltk.UnigramTagger(nltk.corpus.brown.tagged_sents())
+
+
 engine = create_engine(
     DATABASE_STRING,
     connect_args={'check_same_thread': False},
@@ -28,8 +33,10 @@ class Article(Base):
     # Processes abstract with nltk library and returns list of nouns
     def abstract_nouns(self):
         # Tokenize and tag abstracts
-        tokens = nltk.word_tokenize(self.abstract.lower())
-        tagged = nltk.pos_tag(tokens)
+        #tokens = nltk.word_tokenize(self.abstract.lower())
+        #tagged = nltk.pos_tag(tokens)
+        tokens = tokenizer.tokenize(self.abstract)
+        tagged = tagger.tag(tokens)
         nouns = [tagged_word[0] for tagged_word in tagged if tagged_word[1] in ("NN", "NNS", "NNP", "NNPS")
                      and tagged_word[0] not in FILTER_LIST
                      and len(tagged_word[0]) > 1]
