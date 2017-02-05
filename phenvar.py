@@ -16,6 +16,9 @@ def results():
     wordcloud_file_name = generate_wordcloud(rsid_list)
     return render_template('results.html', wordcloud_file_name=wordcloud_file_name)
 
+@application.route("/about/")
+def about():
+    return render_template('about.html')
 
 if __name__ == "main":
     application.run()
