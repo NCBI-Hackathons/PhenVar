@@ -30,16 +30,17 @@ def normalized_word_blob(rsid_list):
         ).all()
     for rsid in rsid_list:
         pmids = [str(result.Article.pmid) for result in results if result.RSIDCitation.rsid == int(rsid)]
-        normalization_factor = 1000/len(pmids)
-        rsid_nouns = []
-        for pmid in pmids:
-            rsid_nouns += article_noun_mapping[pmid]
-        for noun in set(rsid_nouns):
-            normalized_noun_count = normalization_factor * rsid_nouns.count(noun)
-            if noun in word_counts:
-                word_counts[noun] += normalized_noun_count
-            else:
-                word_counts[noun] = normalized_noun_count
+        if pmids:
+            normalization_factor = 1000/len(pmids)
+            rsid_nouns = []
+            for pmid in pmids:
+                rsid_nouns += article_noun_mapping[pmid]
+            for noun in set(rsid_nouns):
+                normalized_noun_count = normalization_factor * rsid_nouns.count(noun)
+                if noun in word_counts:
+                    word_counts[noun] += normalized_noun_count
+                else:
+                    word_counts[noun] = normalized_noun_count
     normalized_blob = ""
     for word in word_counts:
         normalized_blob += "{} ".format(word) * int(word_counts[word])
