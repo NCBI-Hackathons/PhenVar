@@ -1,45 +1,50 @@
 # PhenVar
-PhenVar is designed to take one or more rsids and generate a list of PubMed IDs to query and generate novel associations between publications. It utilizes a local sqlite cache in a configurable location to keep a local copy of relevant srids, pmids, and the abstrat blobs for the pmids.  
+PhenVar is designed to take one or more rsids and generate a list of PubMed IDs to query and generate novel associations between publications. It utilizes a local sqlite database in a configurable location to keep a local copy of relevant srids, pmids, and the abstract blobs for the pmids, which enables faster fetching of results.
+The website portion of phenvar is powered by Flask.
 ## Installation Notes
-At the time of writing, the PyQt4 and SIP packages were broken in pip, so we had to compile them from source.  They make break a pip -r requirements.txt until that issue is resolved.  Otherwise, these scripts are meant to basically be standalone utilities that can be mixed and matched together to work in whatever fashion you are hoping for.  The validate.py can be run to test that all of the functionality is working, you should get two tables and two word clouds as output.  Please utilize the issue tracking on GitHub if you experience any issues or have feature requests.  
+Dependencies:
+* Python 3.3+
+* uwsgi + Nginx (for web)
+* Sqlite 3
+To install, clone the repository (ideally in /opt) and edit the settings.py file, replacing EMAIL with the email address you intend to use when querying NCBI.
+To initialize and load the database and json cache, run:
+`./manage_db initialize`
+`./manage_db load`
+`./manage_db build_json`
+Note that the above will take quite some time (approximately ~1 day) due to the limitations of pubmed's API.
 ### settings.py
-settings.py is a file containing a single dictionary with configuration options that is imported into all of the other tools.  Configuration options you need can easily be added or changed.
+settings.py is a file containing various configuration options used by the application.
+* EMAIL is the email address to use when querying NCBI, ideally this should be your email address
+* WORDCLOUD_STORAGE is the path you wish to store your wordclouds in. The default is static/wc, which is recommended.
+* MAPPING_FILE is a json file that is used to store nouns associated with preprocessed pmid's
+* FILTER_LIST is a list of lowercase words to ignore when generating wordclouds
 ### ncbiutils.py
-#### get_pmids 
-Takes a single rsid input (string) or several rsid inputs (list of strings) and returns a dictionary from Entrez.read/esearch.  The results returned are all pmids which explicitly cited the rsids given.  
-#### get_abstracts
-Expects the results from get_pmids as an input.  Will return a list of abstracts.  Each item in the list is an abstract to a pmid from the get_pmids search results.  Can return a list with only one item.  
-#### get_abstracts_from_list
-Instead of relying on a previous, saved search, this function will return the abstracts from a pre-defined list of pmids
-### db.py
-#### connect
-Plain and simply connects to an sqlite3 database and opens a cursor. Function returns a list where index 0 is the connection name and index 1 is the cursor object.
-#### disconnect
-commits any in-RAM changes and then closes the sqlite3 database
-#### insert_date
-Assumes that the updatehist table is created and inserts a record with the supplied number of "records."  This is meant to be run upon database creation and updates to keep an update history.  Can certainly be improved to contain more pertinent information
-#### print_update_history
-Prints a mostly human-readable form of the update table
-#### check_db
-Checks if a given database location exists -- useful to use before running an update hook or upon initial loading of program.  
-#### create_cache
-A little convoluted right now.  Assumes the db/tables don't exist (so use check_db first) and creates them.  Inserts all values from esearch for rsid/pmids and pmids/abstracts.   Not currently primary key based, so duplicate rows will exist primarily in the pmid/abstracts table.  
-#### check_updates
-Placeholder function that currently doesn't work.  Will check if there are new additions for any of the tables after the initial cache is already created.  
-#### get_pmids
-Given an rsid input, return all pmids that explicitly cite that rsid in a python list
-#### get abstracts
-Placeholder.  Intended purpose is to pass in a list of pmids and get back a list of abstracts. 
-#### initdb
-Used to automatically check_db and then either run init or update, then disconnect.
-### lanpros.py
-#### tokenize_abstracts
-Takes a list of abstracts and creates “tokens” using the nltk module. Tokens are individual words and symbols stored as separate string objects. Output is a list of tokenized abstracts.
-#### tagged_abstracts
-Takes a list of tokenized abstracts (the output from tokenize_abstracts usually) and tags them with a part of speech using the Natural Language Processing guidelines. The output is a list of lists containing tuples of (word, tag) pairs.
-#### extract_nouns
-Takes a list of abstracts that are tokenized and extracts all the words tagged as “NN”, “NNS”, “NNP” or “NNPS”. It then counts the number of occurrences of each word in each abstract and in all the abstracts in the list (associated with the input search terms) It also takes an optional parameter called def_tags_per_abs with default value 0, that sets the threshold for number of times a word can occur in a single abstract as a percent of its occurrences in all the abstracts: if a term occurs several times in one abstract but not at all in any other abstract, the term can be removed as this term is likely not validated across multiple settings. Setting def_tags_per_abs to any number over zero only allows terms that have been validated across more than one study to be outputted. The counts are then normalized to the total number of abstracts. The output of this function is a dictionary of terms of the form {word: normalized number of occurrences}
-### wordcloudfromnoun.py
-#### create_wordcloud
-Takes the dictionary of {word:normalized number of occurrences} and creates a single string with the words*number of occurrences. It then uses the wordcloud module in python to create a wordcloud from this string
+#### PubmedArticle
+This object stores information about an article parsed from a PubmedArticle xml tree. It has the properties:
+* pmid
+* abstract
+* authors
+* date_created
+* date_revised
+And the method rsids(), which queries pubmed for a list of rsids cited in the article.
+#### Author
+Similar to PubmedArticle, this class is initiated with an Author xml tree from a pubmed article, and has the properties:
+* last_name
+* first_name
+* initials
+Or, if it is a collective author:
+* collectiv_name
+Both types of author have the *affiliations* property, which is a list of author affiliations parsed from the xml.
+#### RSID
+The RSID class takes an rsid number as input, and optionally gathers data about that RSID from SNP. It also has a method to return all associated PubmedArticles from pubmed.
+#### get_pubmed_articles
+Returns a full list of pubmed articles via the pubmed_snp_cited search term. Alternatively, only returns articles revised since the since_date variable (a python datetime.date object)
+#### get_all_rsids
+Returns full list of cited rsids from snp, as RSID objects
 
+### database.py
+Contains the database schema definitions, using the Sqlalchemy ORM.
+This also contains functions to perform language processing on abstracts in the database in order to create the cached json file, which contains lists of nouns in each article, linked by their pmid.
+
+### visualization.py
+Contains methods to create wordclouds from a list of rsids.
