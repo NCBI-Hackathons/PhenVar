@@ -12,12 +12,16 @@ To initialize and load the database and json cache, run:
 `./manage_db load`
 `./manage_db build_json`
 Note that the above will take quite some time (approximately ~1 day) due to the limitations of pubmed's API.
+
+## Application Structure
+
 ### settings.py
 settings.py is a file containing various configuration options used by the application.
 * EMAIL is the email address to use when querying NCBI, ideally this should be your email address
 * WORDCLOUD_STORAGE is the path you wish to store your wordclouds in. The default is static/wc, which is recommended.
 * MAPPING_FILE is a json file that is used to store nouns associated with preprocessed pmid's
 * FILTER_LIST is a list of lowercase words to ignore when generating wordclouds
+
 ### ncbiutils.py
 #### PubmedArticle
 This object stores information about an article parsed from a PubmedArticle xml tree. It has the properties:
