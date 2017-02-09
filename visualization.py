@@ -6,6 +6,7 @@ import hashlib
 import os
 
 
+# Creates a blob of words from all articles associated with rsids in a list
 def word_blob(rsid_list):
     noun_list = []
     articles = session.query(Article).join(
@@ -71,13 +72,3 @@ def generate_wordcloud(rsid_list):
         return hashed_file_name
     except IndexError:
         return ""
-"""
-def generate_wordcloud(rsid_list):
-    rsid_string = " ".join(rsid_list)
-    fleetingcloud = tempfile.SpooledTemporaryFile(max_size=0, mode='w+b', buffering=None, encoding=None, newline=None, suffix='', prefix='tmp', dir=None)
-    try:
-        create_wordcloud_from_rsids(rsid_list, fleetingcloud)
-        return fleetingcloud
-    except IndexError:
-        return ""
-"""
