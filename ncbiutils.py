@@ -1,11 +1,11 @@
 from Bio import Entrez
 import xml.etree.ElementTree as ET
-from settings import configuration
+from settings import EMAIL
 from datetime import date, datetime
 from http.client import IncompleteRead
 
 
-Entrez.email = configuration["email"]
+Entrez.email = EMAIL
 
 
 # Author is initialized with the Author xml element
