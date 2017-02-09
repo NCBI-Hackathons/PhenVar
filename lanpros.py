@@ -37,51 +37,30 @@ def extract_nouns(tagged_abstracts_list, def_tags_per_abs=0.0):
     noun_counter = []
     all_abstract_noun_counts = []
     normalized_all_counts = {}
-
     for tags in tagged_abstracts_list:
-
         per_abstract_noun_counts = []
-
         for tag in tags:
-
             if tag[1] == "NN" or tag[1] == "NNS" or tag[1] == "NNP" or tag[1] == "NNPS":
-
                 per_abstract_noun_counts.append(
                     str(tag[0].encode('ascii', 'ignore')))
-
                 noun_counter.append(str(tag[0].encode('ascii', 'ignore')))
-
         all_abstract_noun_counts.append(
             dict(Counter(per_abstract_noun_counts)))
-
     all_counts = dict(Counter(noun_counter))
-
     num_abstracts = float(len(tagged_abstracts_list))
-
     for key in all_counts.keys():
-
         total_occurrences = float(all_counts[key])
-
         for each_abstract in all_abstract_noun_counts:
-
             if key in each_abstract:
-
                 single_abstract_count = float(each_abstract[key])
-
                 if def_tags_per_abs != 0:
-
                     if (single_abstract_count / total_occurrences) < def_tags_per_abs:
-
                         normalized_all_counts[key] = float(
                             all_counts[key]) / num_abstracts
-
                 else:
-
                     normalized_all_counts[key] = float(
                         all_counts[key]) / num_abstracts
-
     return normalized_all_counts
-
 
 def extract_nouns_filter(tagged_abstracts_list, def_tags_per_abs=0.0):
     """Takes a list of tuples of the form (word, tag) and returns a dictionary of counts for each
