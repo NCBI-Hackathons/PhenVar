@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 from flask import Flask, request, render_template
+from flaskext.markdown import Markdown
 from visualization import generate_wordcloud
 application = Flask(__name__)
+Markdown(application)
 
 
 @application.route("/")
 def index():
-    return render_template('index.html')
+    home_markdown = open('markdown/home.md', 'r').read()
+    return render_template('index.html', home_markdown=home_markdown)
 
 
 @application.route("/results/", methods=["GET", "POST"])
@@ -19,7 +22,8 @@ def results():
 
 @application.route("/about/")
 def about():
-    return render_template('about.html')
+    about_markdown = open('markdown/about.md', 'r').read()
+    return render_template('about.html', about_markdown=about_markdown)
 
 if __name__ == "main":
     application.run()
