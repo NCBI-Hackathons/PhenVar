@@ -4,3 +4,5 @@ data/
 *.idea
 *.sqlite3
 static/wc/*.png
+logs/visits.log
+
