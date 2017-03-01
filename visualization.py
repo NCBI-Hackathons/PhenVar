@@ -75,12 +75,37 @@ def normalized_word_blob_by_articles(rsid_list):
     return normalized_blob
 
 
+# Create wordcloud blob using number of articles without multiplying by occurences
+def normalized_word_blob_by_article_count(rsid_list):
+    word_counts = {}
+    pmid_list = (
+        str(article.pmid) for article in session.query(Article).join(
+            RSIDCitation,
+            Article.pmid == RSIDCitation.pmid
+        ).filter(
+            RSIDCitation.rsid.in_(rsid_list)
+        ).distinct().all()
+    )
+    for pmid in pmid_list:
+        unique_nouns = set(article_noun_mapping[pmid])
+        for noun in unique_nouns:
+            if noun in word_counts:
+                word_counts[noun] += 1
+            else:
+                word_counts[noun] = 1
+    normalized_blob = ""
+    for word in word_counts:
+        normalized_blob += "{} ".format(word) * word_counts[word]
+    return normalized_blob
+
+
 # Generate a wordcloud png file from a list of rsids
 def create_wordcloud_from_rsids(rsid_list, normalization_type, output_path=None):
     full_text = {
         "default": word_blob,
         "rsid": normalized_word_blob_by_rsid,
         "article": normalized_word_blob_by_articles,
+        "article_count": normalized_word_blob_by_article_count,
     }[normalization_type](rsid_list)
     word_cloud = WordCloud(width=1600, height=800).generate(full_text)
     plt.figure(figsize=(20, 10), facecolor='k')

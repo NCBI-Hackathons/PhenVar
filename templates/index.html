@@ -1,5 +1,7 @@
 {% extends 'main.html' %}
 {% block content %}
+
+<div class="vertical-center">
 <div>
     <img id="logo-image" src="/static/img/logo.png">
 </div>
@@ -16,7 +18,8 @@
         Normalization Type:<select name="normalization_type">
                 <option value="default">Default</option>
                 <option value="rsid">By RSID</option>
-                <option value="article">By Article Frequency</option>
+                <option value="article">By Article Frequency and Word Count</option>
+                <option value="article_count">By Article Frequency</option>
         </select>
     </form>
 </div>
@@ -24,5 +27,6 @@
     {% filter markdown %}
         {{ home_markdown }}
     {% endfilter %}
+</div>
 </div>
 {% endblock %}

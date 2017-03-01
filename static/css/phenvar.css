@@ -37,3 +37,12 @@ img#wordcloud_image {
     display: block;
 }
 
+.vertical-center {
+    height:100%;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+body {
+    height:100%;
+}
