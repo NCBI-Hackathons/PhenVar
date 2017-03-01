@@ -1,7 +1,5 @@
-configuration = {
-    "email": "jon.demasi@colorado.edu",
-    "direct_query": False,
-}
+# The email address to be used when querying NCBI
+EMAIL = "jon.demasi@colorado.edu",
 
 # Directory to store generated files
 WORDCLOUD_STORAGE = 'static/wc'

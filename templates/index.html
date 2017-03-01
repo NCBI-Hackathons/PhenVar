@@ -1,5 +1,7 @@
 {% extends 'main.html' %}
 {% block content %}
+
+<div class="vertical-center">
 <div>
     <img id="logo-image" src="/static/img/logo.png">
 </div>
@@ -8,18 +10,23 @@
         <label class="control-label">Input rsid numbers as integers seperated by spaces</label>
         <div class="input-group">
             <span class="input-group-addon">RSID(s):</span>
-            <input type="text" class="form-control" name="rsids">
+            <input type="text" class="form-control" name="rsids" placeholder="e.g. 328 326 3">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="submit">Search</button>
             </span>
         </div>
+        Normalization Type:<select name="normalization_type">
+                <option value="default">Default</option>
+                <option value="rsid">By RSID</option>
+                <option value="article">By Article Frequency and Word Count</option>
+                <option value="article_count">By Article Frequency</option>
+        </select>
     </form>
 </div>
-<p class="info_paragraph">
-    PhenVar is designed to take one or more rsids and generate a list of PubMed IDs to query and generate novel
-    associations between publications. It utilizes a local sqlite cache in a configurable location to keep a
-    local copy of relevant srids, pmids, and the abstract blobs for the pmids.
-    <br>
-    The source code for PhenVar is available at <a href="https://github.com/NCBI-Hackathons/PhenVar">GitHub</a>.
-</p>
+<div class="info_paragraph">
+    {% filter markdown %}
+        {{ home_markdown }}
+    {% endfilter %}
+</div>
+</div>
 {% endblock %}

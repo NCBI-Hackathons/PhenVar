@@ -4,7 +4,7 @@ from sys import argv
 
 
 help_text = """USAGE:
-./manage_db <command>
+./manage.py <command>
  commands:
     - initialize    creates tables in database, should only be run once
     - load          loads all snp cited articles from pubmed
