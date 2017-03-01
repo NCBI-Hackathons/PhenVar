@@ -7,6 +7,7 @@
         <script src="/static/js/jquery-3.1.1.min.js"></script>
         <script src="/static/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="/static/css/phenvar.css">
+        <link rel="stylesheet" href="/static/css/font-awesome.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% block headers %}{% endblock %}
     </head>
@@ -37,10 +38,18 @@
                         <li><a href="#">Login</a></li>
                     </ul>
                     -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://github.com/ncbi-hackathons/phenvar/tree/python3"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
-        {% block content %}{% endblock %}
-
+            {% block content %}{% endblock %}
+        <footer class="footer">
+            <div class="container text-center">
+                <p>Copyright © 2017 Regents of the University of Colorado. All Rights Reserved.</p>
+            </div>
+        </footer>
+      
     </body>
 </html>
