@@ -79,3 +79,7 @@ body {
 .container .text-muted {
   margin: 20px 0;
 }*/
+.acknowledgements_paragraph {
+  font-family: serf;
+  font-size: 10px;
+}
