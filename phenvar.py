@@ -31,5 +31,11 @@ def about():
     about_markdown = open('markdown/about.md', 'r').read()
     return render_template('about.html', about_markdown=about_markdown)
 
+@application.route("/acknowledgements/")
+def acknowledgements():
+    acknowledgements_markdown = open('markdown/acknowledgements.md', 'r').read()
+    return render_template('acknowledgements.html', acknowledgements_markdown=acknowledgements_markdown)
+
 if __name__ == "main":
     application.run()
+
