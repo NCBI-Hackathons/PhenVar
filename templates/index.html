@@ -71,6 +71,9 @@
         var predictionArray = [];
         var inputSplit = input.split(" ")
         var inputNumber = inputSplit.slice(-1)[0].replace('rs', '');
+        if (inputNumber == "") {
+            return [];
+        }
         for (var i = 0; i < data.length; i++) {
             if (predictionArray.length > 5) {
                 break;
