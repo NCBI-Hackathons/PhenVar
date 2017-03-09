@@ -242,3 +242,11 @@ def update_data():
     print("Updating mapping file...")
     add_articles_to_mapping(article_models)
 
+
+def build_rsid_list():
+    rsids = list(
+        (str(result[0]) for result in session.query(RSIDCitation.rsid).distinct().order_by(RSIDCitation.rsid).all())
+    )
+    rsid_json = json.dumps(rsids)
+    with open('static/data/rsid_list.json','w') as json_file:
+        json_file.write(rsid_json)

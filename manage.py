@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-from database import initialize_database, load_all_data, load_data_not_present, update_data, build_complete_noun_mapping
+from database import initialize_database, load_all_data, load_data_not_present, update_data, build_complete_noun_mapping,\
+    build_rsid_list
 from sys import argv
 
 
@@ -17,6 +18,11 @@ def help():
     print(help_text)
 
 
+def build_json():
+    build_complete_noun_mapping()
+    build_rsid_list()
+
+
 commands = {
     "--help": help,
     "-h": help,
@@ -24,7 +30,7 @@ commands = {
     "load": load_all_data,
     "resume": load_data_not_present,
     "update": update_data,
-    "build_json": build_complete_noun_mapping,
+    "build_json": build_json,
 }
 
 if len(argv) == 2 and argv[1] in commands:

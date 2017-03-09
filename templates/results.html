@@ -1,7 +1,13 @@
 {% extends 'main.html' %}
+
+{% block headers %}
+<script src="/static/js/dataTables.min.js"></script>
+{% endblock %}
+
 {% block content %}
 {% if wordcloud_file_name %}
     <img id="wordcloud_image" style="width:100%;" src="/static/wc/{{ wordcloud_file_name }}">
+    {% include 'word_statistics_table.html' %}
 {% else %}
     <h2>No results found!</h2>
 {% endif %}

@@ -7,7 +7,7 @@ WORDCLOUD_STORAGE = 'static/wc'
 # Database string to be used by the sqlalchemy ORM
 DATABASE_STRING = "sqlite:///db.sqlite3"
 
-MAPPING_FILE = "article_noun_mapping.json"
+MAPPING_FILE = "static/data/article_noun_mapping.json"
 
 # Words to ignore when generating word cloud
 FILTER_LIST = [
