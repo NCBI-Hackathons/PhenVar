@@ -15,25 +15,25 @@
                 <button class="btn btn-default" type="submit">Search</button>
             </span>
         </div>
-        Base word weight on the following:
+        Base weight of nouns on the following parameters:
         <div class="checkbox">
           <label>
-            <input type="checkbox" name="weight" value="word_count" checked> Word Count
+            <input type="checkbox" name="weight" value="word_count" checked> Word Count - Total number of times a noun appears in associated article abstracts.
           </label>
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox" name="weight" value="article_count"> Article Count
+            <input type="checkbox" name="weight" value="article_count"> Article Count - Total number of articles a noun appears in.
           </label>
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox" name="weight" value="rsid_count"> Associated RSID's
+            <input type="checkbox" name="weight" value="rsid_count"> RSID's - Number of requested RSID's associated with an article containing the word.
           </label>
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="weight" value="rsid_balance"> Normalize results by number of articles associated with each RSID
+                <input type="checkbox" name="weight" value="rsid_balance"> Normalize by RSID - Divide the weight a word receives from a set of articles associated with each RSID by the total number of articles associated with that RSID.
             </label>
         </div>
     </form>
