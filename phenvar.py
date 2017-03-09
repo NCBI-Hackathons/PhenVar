@@ -9,18 +9,10 @@ application = Flask(__name__)
 Markdown(application)
 
 
-all_rsids = "["+",".join(
-        list(
-            (
-                str(result[0]) for result in session.query(RSIDCitation.rsid).distinct().order_by(RSIDCitation.rsid).all()
-            )
-        )
-    )+"]"
-
 @application.route("/")
 def index():
     home_markdown = open('markdown/home.md', 'r').read()
-    return render_template('index.html', home_markdown=home_markdown, rsid_list=all_rsids)
+    return render_template('index.html', home_markdown=home_markdown)
 
 
 @application.route("/results/", methods=["GET", "POST"])

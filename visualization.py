@@ -7,7 +7,7 @@ import os
 
 
 # Create table - NOUN|RSID's|#Articles
-def word_statistics(rsid_list, weights):#, normalization_type):
+def word_statistics(rsid_list, weights, balance_articles_by_rsid=False):#, normalization_type):
     # dictionary in form {"noun": [word_count, article_count, rsids]}
     word_stats = {}
     #noun_list = []
@@ -26,7 +26,7 @@ def word_statistics(rsid_list, weights):#, normalization_type):
         for noun in set(nouns):
             if counting:
                 if noun not in word_stats:
-                    word_stats[noun] = [0, 0, []]
+                    word_stats[noun] = [0, 0, [], 1]
                 word_stats[noun][0] += nouns.count(noun) # Add to word count
                 word_stats[noun][1] += 1                 # Add to article count
             if rsid not in word_stats[noun][2]:
@@ -34,7 +34,6 @@ def word_statistics(rsid_list, weights):#, normalization_type):
         if counting:
             recorded_pmids.append(pmid)
     for noun in word_stats:
-        weight = 1
         noun_stats = word_stats[noun]
         weights_dictionary = {
             "word_count": noun_stats[0],
@@ -42,8 +41,8 @@ def word_statistics(rsid_list, weights):#, normalization_type):
             "rsid_count": len(noun_stats[2]),
         }
         for weight_label in weights:
-            weight *= weights_dictionary[weight_label]
-        word_stats[noun].append(weight)
+            #weight *= weights_dictionary[weight_label]
+            word_stats[noun][3] *= weights_dictionary[weight_label]
     return word_stats
 
 

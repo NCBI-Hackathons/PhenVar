@@ -11,11 +11,6 @@
         <div class="input-group">
             <span class="input-group-addon">RSID(s):</span>
             <input type="text" id="rsidInput" class="form-control" name="rsids" placeholder="e.g. 328 326 3">
-            <!--<datalist id="rsidList" class="form-control" name="rsids" placeholder="e.g. 328 326 3">
-                {% for rsid in rsid_list %}
-                    <option value="rsid">
-                {% endfor %}
-            </datalist>-->
             <span class="input-group-btn">
                 <button class="btn btn-default" type="submit">Search</button>
             </span>
@@ -74,13 +69,24 @@
 <script>
     function predictiveResults(input, data) {
         var predictionArray = [];
-        for (var i = 0; i <= data.length; i++) {
+        var inputSplit = input.split(" ")
+        var inputNumber = inputSplit.slice(-1)[0].replace('rs', '');
+        for (var i = 0; i < data.length; i++) {
             if (predictionArray.length > 5) {
                 break;
             }
-            var rsid = String(data[i]);
-            if (rsid.startsWith(input)) {
-                predictionArray.push(rsid);
+            var rsid = data[i];
+            if (rsid.startsWith(inputNumber)) {
+                var suggestion = ""
+                for (var j = 0; j < inputSplit.length; j++) {
+                    if (j == inputSplit.length - 1) {
+                        suggestion += inputSplit[j].replace(inputNumber, rsid)
+                    }
+                    else {
+                        suggestion += inputSplit[j] + " "
+                    }
+                }
+                predictionArray.push(suggestion);
             }
         }
         return predictionArray;
