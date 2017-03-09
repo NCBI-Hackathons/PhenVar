@@ -15,7 +15,7 @@
                 <button class="btn btn-default" type="submit">Search</button>
             </span>
         </div>
-        Generate wordcloud based on:
+        Base word weight on the following:
         <div class="checkbox">
           <label>
             <input type="checkbox" name="weight" value="word_count" checked> Word Count
@@ -31,31 +31,11 @@
             <input type="checkbox" name="weight" value="rsid_count"> Associated RSID's
           </label>
         </div>
-        <!--
-        <div class="radio">
-          <label>
-            <input type="radio" name="normalization_type" value="default" checked="">
-            None
-          </label>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="weight" value="rsid_balance"> Normalize results by number of articles associated with each RSID
+            </label>
         </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="normalization_type" value="rsid">
-            Balance by RSID
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="normalization_type" value="article">
-            Weight by Number of Articles
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="normalization_type" value="article_count">
-            Weight Exclusively by Number of Articles
-          </label>
-        </div>-->
     </form>
 </div>
 <div class="info_paragraph">
