@@ -14,7 +14,11 @@
                 <td>{{ noun }}</td>
                 <td>{{ word_statistics[noun][0] }}</td>
                 <td>{{ word_statistics[noun][1] }}</td>
-                <td>{{ word_statistics[noun][2] }}</td>
+                <td>
+                    {% for rsid in word_statistics[noun][2] %}
+                        {{ rsid | string + " " }}
+                    {% endfor %}
+                </td>
                 <td>{{ word_statistics[noun][3] }}</td>
             </tr>
         {% endfor %}
