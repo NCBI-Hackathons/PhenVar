@@ -4,6 +4,7 @@ from datetime import datetime
 from flaskext.markdown import Markdown
 from visualization import generate_wordcloud, word_statistics
 from database import session, RSIDCitation
+import json
 
 application = Flask(__name__)
 Markdown(application)
@@ -41,10 +42,28 @@ def results():
     #results = generate_wordcloud(rsid_list, weights)
 
     statistics = word_statistics(rsid_list, weights)
-    if "yes" in request.form.getlist('wordcloud'):
+    if "png" in request.form.getlist('wordcloud'):
         wordcloud_file_name = generate_wordcloud(statistics, rsid_list, weights)
     else:
         wordcloud_file_name = ""
+    # Build javascript array from word statistics
+    if "javascript" in request.form.getlist('wordcloud'):
+        word_statistics_json = []
+        for noun in statistics:
+            word_object = {
+                "text": noun,
+                "weight": statistics[noun][3],
+            }
+            word_statistics_json.append(word_object)
+        return render_template(
+            'results.html',
+            wordcloud_file_name=wordcloud_file_name,
+            word_statistics=statistics,
+            pmid_data=pmid_data,
+            word_statistics_json=word_statistics_json,#jsonify(word_statistics_json),
+        )
+
+
     return render_template(
         'results.html',
         wordcloud_file_name=wordcloud_file_name,
