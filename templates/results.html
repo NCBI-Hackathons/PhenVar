@@ -12,7 +12,7 @@
 {% endif %}
 
 {% if word_statistics_json %}
-    <div id="wordcloud_javascript" style="margin:auto;width:80%;height:750px;"></div>
+    <div id="wordcloud_javascript" style="margin:auto;width:80%;height:900px;"></div>
     <script>
         var words = {{ word_statistics_json | tojson | safe }};
         for (var i = 0; i < words.length; i++) {
@@ -32,12 +32,16 @@
             }*/
         };
         var maxWeight = Math.max.apply(Math, words.map(function(word) { return word.weight; }));
+        var minSize = 10;
         $("#wordcloud_javascript").jQCloud(words, {
             autoResize: true,
             steps: maxWeight,
             fontSize: function(width, height, step) {
-                var maxSize = height / 5;
+                var maxSize = height / 3;
                 return maxSize * step / maxWeight;
+                //var trueSize = maxSize * step / maxWeight;
+                //if (trueSize >= minSize) { return trueSize; }
+                //else {return minSize; }
             },
             classPattern: "w{n} btn",
         });
