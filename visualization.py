@@ -89,8 +89,14 @@ def word_blob(stats):
 # Generate a wordcloud png file from a list of rsids
 def create_wordcloud_from_rsids(rsid_list, weights, output_path=None):#normalization_type, output_path=None):
     stats = word_statistics(rsid_list, weights)
-    full_text = word_blob(stats)
-    word_cloud = WordCloud(width=1600, height=800).generate(full_text)
+    frequencies = []
+    for noun in stats:
+        frequencies.append((noun, stats[noun][3]))
+    word_cloud = WordCloud(
+        width=1600,
+        height=800,
+        relative_scaling=1,
+    ).generate_from_frequencies(frequencies=frequencies)
     plt.figure(figsize=(20, 10), facecolor='k')
     plt.imshow(word_cloud)
     plt.axis("off")
