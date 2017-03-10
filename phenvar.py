@@ -38,16 +38,19 @@ def results():
 
     ## Uncomment below when changing wordcloud form
     #weights = request.form.getlist('weight')
-    results = generate_wordcloud(rsid_list, weights)
-    if results:
-        return render_template(
-            'results.html',
-            wordcloud_file_name=results[0],
-            word_statistics=results[1],
-            pmid_data=pmid_data
-        )
+    #results = generate_wordcloud(rsid_list, weights)
+
+    statistics = word_statistics(rsid_list, weights)
+    if "yes" in request.form.getlist('wordcloud'):
+        wordcloud_file_name = generate_wordcloud(statistics, rsid_list, weights)
     else:
-        return render_template('results.html', wordcloud_file_name="")
+        wordcloud_file_name = ""
+    return render_template(
+        'results.html',
+        wordcloud_file_name=wordcloud_file_name,
+        word_statistics=statistics,
+        pmid_data=pmid_data,
+    )
 
 @application.route("/about/")
 def about():

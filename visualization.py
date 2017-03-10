@@ -87,8 +87,8 @@ def word_statistics(rsid_list, weights):
 
 
 # Generate a wordcloud png file from a list of rsids
-def create_wordcloud_from_rsids(rsid_list, weights, output_path=None):#normalization_type, output_path=None):
-    stats = word_statistics(rsid_list, weights)
+def create_wordcloud_from_stats(stats, output_path=None):#rsid_list, weights, output_path=None):#normalization_type, output_path=None):
+    #stats = word_statistics(rsid_list, weights)
     frequencies = []
     for noun in stats:
         frequencies.append((noun, stats[noun][3]))
@@ -103,17 +103,17 @@ def create_wordcloud_from_rsids(rsid_list, weights, output_path=None):#normaliza
     plt.tight_layout(pad=0)
     plt.show()
     plt.savefig(output_path, facecolor='k', bbox_inches='tight')
-    return stats
+    #return stats
 
 
 # Function results in IndexError if no results are found
-def generate_wordcloud(rsid_list, weights):
+def generate_wordcloud(stats, rsid_list, weights): #rsid_list, weights):
     rsid_string = " ".join(rsid_list) + "".join(weights)
     hash_object = hashlib.sha1(rsid_string.encode())
     hashed_file_name = "{}.png".format(hash_object.hexdigest())
     hashed_file_path = os.path.join(WORDCLOUD_STORAGE, hashed_file_name)
     try:
-        stats = create_wordcloud_from_rsids(rsid_list, weights, hashed_file_path)
-        return hashed_file_name, stats
+        create_wordcloud_from_stats(stats, hashed_file_path)#rsid_list, weights, hashed_file_path)
+        return hashed_file_name
     except IndexError:
         return False
