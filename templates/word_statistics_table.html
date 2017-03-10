@@ -11,7 +11,7 @@
     <tbody>
         {% for noun in word_statistics %}
             <tr>
-                <td>{{ noun }}</td>
+                <td><a href="https://www.ncbi.nlm.nih.gov/pubmed/?term={{ noun }}">{{ noun }}</a></td>
                 <td>{{ word_statistics[noun][0] }}</td>
                 <td>{{ word_statistics[noun][1] }}</td>
                 <td>
