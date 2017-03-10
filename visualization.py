@@ -95,7 +95,7 @@ def create_wordcloud_from_rsids(rsid_list, weights, output_path=None):#normaliza
     word_cloud = WordCloud(
         width=1600,
         height=800,
-        relative_scaling=1,
+        #relative_scaling=0.75,
     ).generate_from_frequencies(frequencies=frequencies)
     plt.figure(figsize=(20, 10), facecolor='k')
     plt.imshow(word_cloud)

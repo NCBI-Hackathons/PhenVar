@@ -23,15 +23,23 @@ def results():
         logfile.write(log_string)
     rsid_string = request.form["rsids"].strip("rs")
     rsid_list = rsid_string.split()
-    #normalization_type = request.form["normalization_type"]
-    weights = request.form.getlist('weight')
-    #wordcloud_file_name = generate_wordcloud(rsid_list, weights)#normalization_type)
+
+    ## Comment below when changing wordcloud form
+    normalization_type = request.form["normalization_type"]
+    weights = {
+        "default": ["word_count"],
+        "rsid": ["word_count", "rsid_balance"],
+        "article": ["word_count", "article_count"],
+        "article_count": ["article_count"],
+    }[normalization_type]
+
+    ## Uncomment below when changing wordcloud form
+    #weights = request.form.getlist('weight')
     results = generate_wordcloud(rsid_list, weights)
     if results:
         return render_template('results.html', wordcloud_file_name=results[0], word_statistics=results[1])
     else:
         return render_template('results.html', wordcloud_file_name="")
-    #return render_template('results.html', wordcloud_file_name=wordcloud_file_name)
 
 @application.route("/about/")
 def about():

@@ -15,6 +15,35 @@
                 <button class="btn btn-default" type="submit">Search</button>
             </span>
         </div>
+
+       Normalization Type:
+        <div class="radio">
+          <label>
+            <input type="radio" name="normalization_type" value="default" checked="">
+            None
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="normalization_type" value="rsid">
+            Balance by RSID
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="normalization_type" value="article">
+            Weight by Number of Articles
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="normalization_type" value="article_count">
+            Weight Exclusively by Number of Articles
+          </label>
+        </div>
+
+        <!-- Form below will eventually be integrated into main site -->
+        <!--
         Base weight of nouns on the following parameters:
         <div class="checkbox">
           <label>
@@ -36,6 +65,7 @@
                 <input type="checkbox" name="weight" value="rsid_balance"> Normalize by RSID - Divide the weight a word receives from a set of articles associated with each RSID by the total number of articles associated with that RSID.
             </label>
         </div>
+        -->
     </form>
 </div>
 <div class="info_paragraph">
