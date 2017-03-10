@@ -23,6 +23,9 @@ def results():
         logfile.write(log_string)
     rsid_string = request.form["rsids"].strip("rs")
     rsid_list = rsid_string.split()
+    pmid_data = {}
+    for rsid in rsid_list:
+        pmid_data[rsid] = [str(result.pmid) for result in session.query(RSIDCitation).filter_by(rsid=int(rsid))]
 
     ## Comment below when changing wordcloud form
     normalization_type = request.form["normalization_type"]
@@ -37,7 +40,12 @@ def results():
     #weights = request.form.getlist('weight')
     results = generate_wordcloud(rsid_list, weights)
     if results:
-        return render_template('results.html', wordcloud_file_name=results[0], word_statistics=results[1])
+        return render_template(
+            'results.html',
+            wordcloud_file_name=results[0],
+            word_statistics=results[1],
+            pmid_data=pmid_data
+        )
     else:
         return render_template('results.html', wordcloud_file_name="")
 

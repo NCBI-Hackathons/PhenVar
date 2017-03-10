@@ -7,6 +7,20 @@
 {% block content %}
 {% if wordcloud_file_name %}
     <img id="wordcloud_image" style="width:100%;" src="/static/wc/{{ wordcloud_file_name }}">
+
+    <div class="btn-group">
+        <a href="#" class="btn btn-default">Link to Articles Citing RSID's</a>
+        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            {% for rsid in pmid_data %}
+                <li>
+                    <a href="https://www.ncbi.nlm.nih.gov/pubmed/?term={% for pmid in pmid_data[rsid] %}{{ pmid }}+{% endfor %}">
+                        rs{{ rsid }} ({{ pmid_data[rsid] | length }})
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
     {% include 'word_statistics_table.html' %}
 {% else %}
     <h2>No results found!</h2>

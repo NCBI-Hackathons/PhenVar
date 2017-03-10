@@ -79,11 +79,11 @@ def word_statistics(rsid_list, weights):
     return word_stats
 
 
-def word_blob(stats):
-    blob = ""
-    for noun in stats:
-        blob += "{} ".format(noun) * stats[noun][3]
-    return blob
+#def word_blob(stats):
+#    blob = ""
+#    for noun in stats:
+#        blob += "{} ".format(noun) * stats[noun][3]
+#    return blob
 
 
 # Generate a wordcloud png file from a list of rsids
