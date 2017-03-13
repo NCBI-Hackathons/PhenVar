@@ -26,6 +26,16 @@ class Article(Base):
     date_created = Column(Date)
     date_revised = Column(Date)
 
+    # article in form it would take on when used in visualized json node
+    def as_dictionary(self):
+        return {
+            "id": "pm{}".format(self.pmid),
+            "type": "article",
+            "abstract": self.abstract,
+            "date_created": str(self.date_created),
+            "date_revised": str(self.date_revised),
+        }
+
     # Processes abstract with nltk library and returns list of nouns
     def abstract_nouns(self):
         # Tokenize and tag abstracts

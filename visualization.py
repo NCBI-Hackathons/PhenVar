@@ -79,7 +79,8 @@ def word_statistics(rsid_list, weights):
     return word_stats
 
 
-def associated_articles_rsids(noun):
+# Returns dictionary of the form {"pmid": [rsid's...], ... }
+def search_noun(noun):
     results = {}
     pmid_list = [pmid for pmid in article_noun_mapping if noun in article_noun_mapping[pmid]]
     for pmid in pmid_list:
@@ -87,6 +88,57 @@ def associated_articles_rsids(noun):
             str(result[0]) for result in session.query(RSIDCitation.rsid).filter_by(pmid=int(pmid)).distinct().all()
         ])
     return results
+
+
+# Returns associated rsid's,
+def article_json(articles):
+    nodes = []
+    links = []
+    for article in articles:
+        article_dictionary = article.as_dictionary()
+        article_dictionary["nouns"] = article_noun_mapping[str(article.pmid)]
+        nodes.append(article_dictionary)
+        rsid_list = ["rs{}".format(str(result[0])) for result in session.query(RSIDCitation.rsid).filter_by(pmid=article.pmid).all()]
+        for rsid in rsid_list:
+            rsid_label = "rs{}".format(rsid)
+            rsid_node = {"id": rsid_label, "type": "rsid"}
+            if rsid_node not in nodes:
+                nodes.append(rsid_node)
+            links.append({
+                "source": article_dictionary["id"],
+                "target": rsid_label,
+            })
+    return {
+        "nodes": nodes,
+        "links": links,
+    }
+
+
+def noun_json(noun):
+    nodes = []
+    links = []
+    noun_stats = search_noun(noun)
+    for pmid in noun_stats:
+        nodes.append({
+            "id": "pm{}".format(pmid),
+            "type": "article",
+            "weight": article_noun_mapping[pmid].count(noun)/len(article_noun_mapping[pmid]),
+        })
+        for rsid in noun_stats[pmid]:
+            rsid_dictionary = {
+                "id": "rs{}".format(rsid),
+                "type": "rsid",
+            }
+            if rsid_dictionary not in nodes:
+                nodes.append(rsid_dictionary)
+            links.append({
+                "source": "pm{}".format(pmid),
+                "target": "rs{}".format(rsid),
+            })
+    return {
+        "nodes": nodes,
+        "links": links,
+    }
 
 
 # Generate a wordcloud png file from a list of rsids

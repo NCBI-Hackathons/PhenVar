@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+{% block headers %}
+    <script src="/static/js/d3.min.js"></script>
+<style>
+    .link {
+        stroke: #999;
+        stroke-width: 1.5px;
+        opacity: 0.5;
+    }
+    .node {
+        stroke: #000;
+        stroke-width: 1.5px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+    <svg></svg>
+
+<div style="position:fixed;top:50px;right:0;width:20%;min-width:200px;">
+    <div class="panel panel-primary" style="float:left;clear:none;width:100%;height:150px;overflow:hidden;">
+        <div class="panel-heading">Key</div>
+        <div class="panel-body">
+            <svg height="100px;">
+                <circle cx="10" cy="10" r="10" stroke="#000" stroke-width="1.5px" fill="blue" />
+                <text x="25" y="15" fill="white">Article</text>
+                <circle cx="10" cy="35" r="10" stroke="#000" stroke-width="1.5px" fill="red" />
+                <text x="25" y="40" fill="white">RSID</text>
+            </svg>
+        </div>
+    </div>
+
+    <div class="panel panel-info" style="float:left;clear:none;width:100%;">
+        <div class="panel-heading">
+            Hover over a Node or for Information
+        </div>
+        <div id="info_paragraph" class="panel-body">
+
+        </div>
+    </div>
+</div>
+
+    <script src="/static/js/graph.js"></script>
+    <script>
+        var testdata = {{ test_json | tojson | safe }};
+        renderGraph(false, testdata);
+    </script>
+{% endblock %}
