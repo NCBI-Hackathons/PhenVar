@@ -48,7 +48,11 @@
     </script>
 {% endif %}
 
-    <div class="btn-group">
+{% if graph_json %}
+    {% include 'graph.html' %}
+{% endif %}
+
+    <div style="float:left;clear:left;" class="btn-group">
         <!--<a class="btn btn-default">Link to Articles Citing RSID's</a>-->
         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Links to Articles Citing RSID's<span class="caret"></span></a>
         <ul class="dropdown-menu">

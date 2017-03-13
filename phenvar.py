@@ -2,7 +2,7 @@
 from flask import Flask, request, render_template, jsonify
 from datetime import datetime
 from flaskext.markdown import Markdown
-from visualization import generate_wordcloud, word_statistics, article_json, noun_json
+from visualization import generate_wordcloud, word_statistics, article_json, noun_json, rsid_json
 from database import session, RSIDCitation, Article
 import json
 
@@ -42,12 +42,18 @@ def results():
     #results = generate_wordcloud(rsid_list, weights)
 
     statistics = word_statistics(rsid_list, weights)
-    if "png" in request.form.getlist('wordcloud'):
+    if "png-wordcloud" in request.form.getlist('visualization'):
         wordcloud_file_name = generate_wordcloud(statistics, rsid_list, weights)
     else:
         wordcloud_file_name = ""
+
+    if "js-graph" in request.form.getlist('visualization'):
+        graph_json = rsid_json(rsid_list)
+    else:
+        graph_json = False
+
     # Build javascript array from word statistics
-    if "javascript" in request.form.getlist('wordcloud'):
+    if "js-wordcloud" in request.form.getlist('visualization'):
         word_statistics_json = []
         for noun in statistics:
             word_object = {
@@ -55,19 +61,16 @@ def results():
                 "weight": statistics[noun][3],
             }
             word_statistics_json.append(word_object)
-        return render_template(
-            'results.html',
-            wordcloud_file_name=wordcloud_file_name,
-            word_statistics=statistics,
-            pmid_data=pmid_data,
-            word_statistics_json=word_statistics_json,#jsonify(word_statistics_json),
-        )
+    else:
+        word_statistics_json = False
 
     return render_template(
         'results.html',
         wordcloud_file_name=wordcloud_file_name,
         word_statistics=statistics,
         pmid_data=pmid_data,
+        word_statistics_json=word_statistics_json,
+        graph_json=graph_json,
     )
 
 @application.route("/about/")
@@ -80,25 +83,11 @@ def acknowledgements():
     acknowledgements_markdown = open('markdown/acknowledgements.md', 'r').read()
     return render_template('acknowledgements.html', acknowledgements_markdown=acknowledgements_markdown)
 
-@application.route("/testgraph/")
-def testgraph():
-    #article_list = session.query(Article).limit(50).all()
-    test_list = [3,4,5,7,8,10,11,12,13,14,16,21,22,31,37]
-    results = session.query(Article, RSIDCitation).join(
-        RSIDCitation,
-        Article.pmid == RSIDCitation.pmid
-    ).filter(
-        RSIDCitation.rsid.in_(test_list)
-    ).all()
-    article_list = list(set((result.Article for result in results)))
-    test_json = article_json(article_list)
-    return render_template('test_graph.html', test_json=test_json)
 
-
-@application.route("/graph/<noun>/")
-def noungraph(noun):
-    test_json = noun_json(noun)
-    return render_template('test_graph.html', test_json=test_json)
+#@application.route("/graph/<noun>/")
+#def noungraph(noun):
+#    test_json = noun_json(noun)
+#    return render_template('test_graph.html', test_json=test_json)
 
 
 if __name__ == "main":

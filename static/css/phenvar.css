@@ -90,3 +90,23 @@ body {
   font-family: serif;
 }
 
+.link {
+    stroke: #999;
+    stroke-width: 1.5px;
+    opacity: 0.5;
+}
+
+.node {
+    stroke-width: 1.5px;
+    stroke: #000;
+}
+
+#nountable_length {
+    float: left;
+    clear: left;
+}
+
+#nountable_filter {
+    float: left;
+    clear: left;
+}

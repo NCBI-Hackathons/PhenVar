@@ -15,14 +15,20 @@
                 <button class="btn btn-default" type="submit">Search</button>
             </span>
         </div>
+        Visualization options:
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="wordcloud" value="png" checked> Generate a Wordcloud Image From Results
+                <input type="checkbox" name="visualization" value="png-wordcloud" checked> Generate a Wordcloud Image From Results
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="wordcloud" value="javascript"> Generate a Javascript Wordcloud from results
+                <input type="checkbox" name="visualization" value="js-wordcloud"> Generate a Javascript Wordcloud from results
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="visualization" value="js-graph"> Generate a graph of publications (may be slow for heavily-cited rsids)
             </label>
         </div>
 

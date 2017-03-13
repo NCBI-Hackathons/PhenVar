@@ -140,6 +140,36 @@ def noun_json(noun):
         "links": links,
     }
 
+def rsid_json(rsid_list):
+    articles = session.query(Article).join(
+        RSIDCitation,
+        Article.pmid == RSIDCitation.pmid
+    ).filter(
+        RSIDCitation.rsid.in_(rsid_list)
+    ).distinct().all()
+    nodes = []
+    links = []
+    for article in articles:
+        nodes.append(
+            article.as_dictionary()
+        )
+        rsid_list = [result[0] for result in session.query(RSIDCitation.rsid).filter_by(pmid=article.pmid).distinct().all()]
+        for rsid in rsid_list:
+            rsid_dictionary = {
+                "id": "rs{}".format(rsid),
+                "type": "rsid",
+            }
+            if rsid_dictionary not in nodes:
+                nodes.append(rsid_dictionary)
+            links.append({
+                "source": "pm{}".format(article.pmid),
+                "target": "rs{}".format(rsid)
+            })
+    return {
+        "nodes": nodes,
+        "links": links,
+    }
+
 
 # Generate a wordcloud png file from a list of rsids
 def create_wordcloud_from_stats(stats, output_path=None):#rsid_list, weights, output_path=None):#normalization_type, output_path=None):

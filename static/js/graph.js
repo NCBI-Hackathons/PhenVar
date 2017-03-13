@@ -1,5 +1,5 @@
 var width = window.innerWidth * 0.75,
-    height = window.innerHeight;
+    height = 900;
 
 var svg = d3.select("svg")
     .attr("width", width)
@@ -35,7 +35,7 @@ function dragstarted(d) {
 function displayInfo(data) {
     var infoParagraph = document.getElementById("info_paragraph");
     if (data.type == "article") {
-        infoParagraph.innerHTML = data.id.replace("pm", "");
+        infoParagraph.innerHTML = data.id.replace("pm", "") + "<br>" + data.date_created + "<br>" + data.abstract;
     }
     else {
         infoParagraph.innerHTML = data.id;
@@ -65,6 +65,7 @@ function ticked() {
 function renderGraph(error, graph) {
     if (error) throw error;
 
+    /*
     var maxWeight = Math.max.apply(Math, graph.nodes.map(function(node) {
         if (node.type == "article") {
             return node.weight;
@@ -74,8 +75,8 @@ function renderGraph(error, graph) {
     var maxSize = 24;
     var minSize = 6;
     var stepSize = (maxSize - minSize)/maxWeight
+    */
 
-    console.log(maxWeight);
     simulation.nodes(graph.nodes);
     simulation.force("link").links(graph.links);
 
@@ -88,14 +89,14 @@ function renderGraph(error, graph) {
         .data(graph.nodes)
         .enter().append("circle")
             .attr("class", "node")
-            .attr("r", function(d) {  //10)
+            .attr("r", 10/*function(d) {  //10)
                 if (d.type == "article") {
                     return d.weight * stepSize + minSize;
                 }
                 else {
                     return 6;
                 }
-            })
+            }*/)
             .style("fill", function(d) {
                 return {
                     "article": "blue",
