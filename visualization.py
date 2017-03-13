@@ -79,11 +79,14 @@ def word_statistics(rsid_list, weights):
     return word_stats
 
 
-#def word_blob(stats):
-#    blob = ""
-#    for noun in stats:
-#        blob += "{} ".format(noun) * stats[noun][3]
-#    return blob
+def associated_articles_rsids(noun):
+    results = {}
+    pmid_list = [pmid for pmid in article_noun_mapping if noun in article_noun_mapping[pmid]]
+    for pmid in pmid_list:
+        results[pmid] = list([
+            str(result[0]) for result in session.query(RSIDCitation.rsid).filter_by(pmid=int(pmid)).distinct().all()
+        ])
+    return results
 
 
 # Generate a wordcloud png file from a list of rsids
