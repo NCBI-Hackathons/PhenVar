@@ -149,22 +149,29 @@ def rsid_json(rsid_list):
     ).distinct().all()
     nodes = []
     links = []
+
+    # Create article nodes
+    pmid_list = []
     for article in articles:
         nodes.append(
             article.as_dictionary()
         )
-        rsid_list = [result[0] for result in session.query(RSIDCitation.rsid).filter_by(pmid=article.pmid).distinct().all()]
-        for rsid in rsid_list:
-            rsid_dictionary = {
-                "id": "rs{}".format(rsid),
-                "type": "rsid",
-            }
-            if rsid_dictionary not in nodes:
-                nodes.append(rsid_dictionary)
-            links.append({
-                "source": "pm{}".format(article.pmid),
-                "target": "rs{}".format(rsid)
-            })
+        pmid_list.append(article.pmid)
+
+    # Fetch RSID citations, create links and rsid nodes
+    rsid_citations = session.query(RSIDCitation).filter(RSIDCitation.pmid.in_(pmid_list)).all()
+    for rsid_citation in rsid_citations:
+        nodes.append({
+            "id": "rs{}".format(rsid_citation.rsid),
+            "type": "rsid",
+        })
+        links.append({
+            "source": "pm{}".format(rsid_citation.pmid),
+            "target": "rs{}".format(rsid_citation.rsid),
+        })
+
+    # Remove duplicate entries from nodes
+    nodes = [dict(node_tuple) for node_tuple in set(tuple(node.items()) for node in nodes)]
     return {
         "nodes": nodes,
         "links": links,
