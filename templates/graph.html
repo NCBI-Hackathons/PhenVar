@@ -1,18 +1,20 @@
 <script src="/static/js/d3.min.js"></script>
 <svg style="float:left;clear:none;"></svg>
 <div style="width:20%;float:left;clear:right;">
-    <div class="panel panel-primary" style="float:left;clear:none;width:100%;height:150px;">
+    <div class="panel panel-default" style="float:left;clear:none;width:100%;height:150px;">
         <div class="panel-heading">Key</div>
         <div class="panel-body">
             <svg height="100px;">
-                <circle cx="10" cy="10" r="10" stroke="#000" stroke-width="1.5px" fill="blue" />
+                <circle cx="10" cy="10" r="10" class="node article" />
                 <text x="25" y="15" fill="white">Article</text>
-                <circle cx="10" cy="35" r="10" stroke="#000" stroke-width="1.5px" fill="red" />
+                <circle cx="10" cy="35" r="10" class="node rsid" />
                 <text x="25" y="40" fill="white">RSID</text>
+                <circle cx="10" cy="60" r="10" class="node rsid-requested" />
+                <text x="25" y="65" fill="white">Requested RSID</text>
             </svg>
         </div>
     </div>
-    <div class="panel panel-info" style="float:left;clear:none;width:100%;">
+    <div class="panel panel-default" style="float:left;clear:none;width:100%;">
         <div class="panel-heading">
             Hover over a Node or for Information
         </div>

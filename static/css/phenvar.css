@@ -93,12 +93,31 @@ body {
 .link {
     stroke: #999;
     stroke-width: 1.5px;
-    opacity: 0.5;
+    opacity: 0.6;
+}
+
+.R {
+    stroke: #9ACD32;
+    stroke-width: 2px;
+    opacity: 0.8;
 }
 
 .node {
     stroke-width: 1.5px;
-    stroke: #000;
+    stroke: #D3D3D3;
+}
+
+rsid {
+    //fill: #FF4500;
+    fill: #999;
+}
+
+.article {
+    fill: #8A2BE2;
+}
+
+.rsid-requested {
+    fill: #32CD32;
 }
 
 #nountable_length {

@@ -65,44 +65,23 @@ function ticked() {
 function renderGraph(error, graph) {
     if (error) throw error;
 
-    /*
-    var maxWeight = Math.max.apply(Math, graph.nodes.map(function(node) {
-        if (node.type == "article") {
-            return node.weight;
-        }
-        else { return 0; }
-    }));
-    var maxSize = 24;
-    var minSize = 6;
-    var stepSize = (maxSize - minSize)/maxWeight
-    */
-
     simulation.nodes(graph.nodes);
     simulation.force("link").links(graph.links);
 
     link = link
         .data(graph.links)
         .enter().append("line")
-            .attr("class", "link");
+            .attr("class", function (d) {
+                return "link " + d.type;
+            });
 
     node = node
         .data(graph.nodes)
         .enter().append("circle")
-            .attr("class", "node")
-            .attr("r", 10/*function(d) {  //10)
-                if (d.type == "article") {
-                    return d.weight * stepSize + minSize;
-                }
-                else {
-                    return 6;
-                }
-            }*/)
-            .style("fill", function(d) {
-                return {
-                    "article": "blue",
-                    "rsid": "red",
-                }[d.type]
+            .attr("class", function(d) {
+                return "node " + d.type;
             })
+            .attr("r", 10)
             .call(d3.drag()
                 .on("start", dragstarted)
                 .on("drag", dragged)
