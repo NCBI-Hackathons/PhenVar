@@ -22,7 +22,7 @@ def results():
     with open("logs/visits.log", "a") as logfile:
         log_string = "{}\t{}\n".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), request.environ["REMOTE_ADDR"])
         logfile.write(log_string)
-    rsid_string = request.form["rsids"].strip("rs")
+    rsid_string = request.form["rsids"].replace("rs", "") #strip("rs")
     rsid_list = rsid_string.split()
     pmid_data = {}
     for rsid in rsid_list:
