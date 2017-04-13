@@ -16,20 +16,21 @@ def index():
     return render_template('index.html', home_markdown=home_markdown)
 
 
-@application.route("/results/", methods=["GET", "POST"])
+@application.route("/results/", methods=["GET"])
 def results():
     # Log user's IP address
     with open("logs/visits.log", "a") as logfile:
         log_string = "{}\t{}\n".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), request.environ["REMOTE_ADDR"])
         logfile.write(log_string)
-    rsid_string = request.form["rsids"].replace('rs', '')
+    rsid_string = request.args["rsids"].replace('rs', '')
     rsid_list = rsid_string.split()
     pmid_data = {}
+
     for rsid in rsid_list:
         pmid_data[rsid] = [str(result.pmid) for result in session.query(RSIDCitation).filter_by(rsid=int(rsid))]
 
     ## Comment below when changing wordcloud form
-    normalization_type = request.form["normalization_type"]
+    normalization_type = request.args["normalization_type"]
     weights = {
         "default": ["word_count"],
         "rsid": ["word_count", "rsid_balance"],
@@ -42,18 +43,18 @@ def results():
     #results = generate_wordcloud(rsid_list, weights)
 
     statistics = word_statistics(rsid_list, weights)
-    if "png-wordcloud" in request.form.getlist('visualization'):
+    if "png-wordcloud" in request.args.getlist('visualization'):
         wordcloud_file_name = generate_wordcloud(statistics, rsid_list, weights)
     else:
         wordcloud_file_name = ""
 
-    if "js-graph" in request.form.getlist('visualization'):
+    if "js-graph" in request.args.getlist('visualization'):
         graph_json = rsid_json(rsid_list)
     else:
         graph_json = False
 
     # Build javascript array from word statistics
-    if "js-wordcloud" in request.form.getlist('visualization'):
+    if "js-wordcloud" in request.args.getlist('visualization'):
         word_statistics_json = []
         for noun in statistics:
             word_object = {
