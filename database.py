@@ -238,8 +238,10 @@ def load_data_not_present():
 
 
 # Get any articles revised since the latest date_revised in database and load them
-def update_data():
+def update_data(since_date=False):
     latest_change = session.query(func.max(Article.date_revised)).first()[0]
+    if since_date:
+        latest_change=since_date
     updated_pubmed_articles = get_pubmed_articles(since_date=latest_change)
     article_models = []
     count = 0

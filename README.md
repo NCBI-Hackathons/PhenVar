@@ -31,6 +31,19 @@ Copy or symlink phenvar.ini to /etc/uwsgi.d/ and phenvar.conf to /etc/nginx/site
 
 It may be necessary to grant permissions to the uwsgi user to access the PhenVar application and log files (located at /var/log/uwsgi/phenvar.log).
 
+## Accessing Data Via URL Parameters
+The search form can be queried via the following url parameters from the /results/ location:
+
+rsids: this is a list of rsids seperated by plus signs (when querying via url) e.g. 328+327+326
+
+visualization: this parameter can be input multiple times for multiple visualization types; the available options are png-wordcloud, js-wordcloud, and js-graph for the wordcloud image, javascript wordcloud, and force-directed graph, respectively.
+
+normalization-type: available parameters are default, rsid, article and article_count
+
+for example, to do a search for rsids 326 and 327, with visualization options js-wordcloud and js-graph, using the article_count normalization option, you would input the following url:
+
+https://phenvar.colorado.edu/results/?rsids=326+327&visualization=js-wordcloud&visualization=js-graph&normalization_type=article_count
+
 ## Application Structure
 
 ### settings.py
