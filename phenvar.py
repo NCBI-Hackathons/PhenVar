@@ -74,6 +74,12 @@ def results():
         graph_json=graph_json,
     )
 
+@application.route("/graph/", methods=["GET"])
+def graph():
+    rsid_string = request.args["rsids"].replace('rs', '')
+    rsid_list = rsid_string.split()
+    return json.dumps(rsid_json(rsid_list))
+
 @application.route("/about/")
 def about():
     about_markdown = open('markdown/about.md', 'r').read()
