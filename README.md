@@ -27,6 +27,12 @@ If the load command times out partway through, run:
 
 `./manage.py resume`
 
+To update the database with the latest data from PubMed (best to run this as a daily cronjob to avoid API timeouts from large queries), run:
+
+`./manage.py update`
+
+It may be necessary to restart your webserver for new changes to appear in the web.
+
 Copy or symlink phenvar.ini to /etc/uwsgi.d/ and phenvar.conf to /etc/nginx/sites-enabled/ (assuming CentOS 7.x system) and restart nginx and uwsgi. 
 
 It may be necessary to grant permissions to the uwsgi user to access the PhenVar application and log files (located at /var/log/uwsgi/phenvar.log).
