@@ -13,7 +13,7 @@ Install python dependencies with:
 
 `pip3 install -r requirements.txt`
 
-To initialize and load the database and json cache, run:
+To initialize and load the database and json cache, run the following from the PhenVar directory (needs to be run from this directory due to relative paths):
 
 `./manage.py initialize`
 
