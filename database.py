@@ -262,3 +262,7 @@ def build_rsid_list():
     rsid_json = json.dumps(rsids)
     with open('static/data/rsid_list.json','w') as json_file:
         json_file.write(rsid_json)
+
+
+def datafile_synced():
+    pass
