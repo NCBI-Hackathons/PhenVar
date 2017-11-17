@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from database import initialize_database, load_all_data, load_data_not_present, update_data, build_complete_noun_mapping,\
-    build_rsid_list
+    build_rsid_list, unsynced_pmids, add_articles_to_mapping
 from sys import argv
 
 
@@ -23,6 +23,10 @@ def build_json():
     build_rsid_list()
 
 
+def sync_json():
+    add_articles_to_mapping(unsynced_pmids())
+
+
 commands = {
     "--help": help,
     "-h": help,
@@ -31,6 +35,7 @@ commands = {
     "resume": load_data_not_present,
     "update": update_data,
     "build_json": build_json,
+    "sync_json": sync_json,
 }
 
 if len(argv) == 2 and argv[1] in commands:

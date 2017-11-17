@@ -264,5 +264,13 @@ def build_rsid_list():
         json_file.write(rsid_json)
 
 
-def datafile_synced():
-    pass
+def unsynced_pmids():
+    articles = session.query(Article).all()
+    noun_mapping = load_noun_mapping()
+    #return all(article.pmid in noun_mapping for article in articles)
+    unsynced = []
+    for article in articles:
+        if str(article.pmid) not in noun_mapping:
+            unsynced.append(article.pmid)
+    return unsynced
+

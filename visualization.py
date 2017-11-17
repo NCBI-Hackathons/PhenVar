@@ -140,6 +140,7 @@ def noun_json(noun):
         "links": links,
     }
 
+
 def rsid_json(rsid_list):
     articles = session.query(Article).join(
         RSIDCitation,
