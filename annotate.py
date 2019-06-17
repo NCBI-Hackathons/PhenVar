@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 
 
 def annotate_RS_ID(RS_ID, email):
-    """This script should return annotation asspciate with each RS ID. Can incorporate more information later"""
+    """This script should return annotations associated with each RS ID. Can incorporate more information later"""
     Entrez.email = email
     toreturn = {}
     for each_RS_ID in RS_ID:
