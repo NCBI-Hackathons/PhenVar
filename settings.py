@@ -29,5 +29,6 @@ FILTER_LIST = [
     'activity', 'status', 'testing', 'metabolism', 'identification', '×', 'sequence', 'index', 'mass', 'ancestry',
     'information', 'system', 'basis', 'variability', 'regulation', 'influence', 'score', 'correction', 'body',
     'methods', 'syndrome', 'aim', 'genotyping', 'Genome-wide', 'power', 'use', 'presence', 'etiology', 'sex',
-    'promoter', 'hypothesis', 'marker', 'affymetrix', 'ratios', 'relationship', 'variance', 'growth', 'research', 'time'
+    'promoter', 'hypothesis', 'marker', 'affymetrix', 'ratios', 'relationship', 'variance', 'growth', 'research', 'time', 
+    'estimates', 'aims', 'procedure', 'proportions'
 ]
